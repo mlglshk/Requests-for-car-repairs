@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оператор - Управление заявками</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Рабочее место оператора</h1>
+            <div class="user-info">
+                <span id="userName"></span>
+                <button onclick="logout()">Выйти</button>
+            </div>
+        </div>
+
+        <div class="nav">
+            <button onclick="showSection('newRequests')" class="active">Новые заявки</button>
+            <button onclick="showSection('allRequests')">Все заявки</button>
+            <button onclick="showSection('registerRequest')">Регистрация заявки</button>
+            <button onclick="showSection('analytics')">Аналитика</button>
+        </div>
+
+        <!-- Новые заявки -->
+        <div id="newRequests" class="section active">
+            <h2>Новые заявки</h2>
+            <div id="newRequestsList"></div>
+        </div>
+
+        <!-- Все заявки -->
+        <div id="allRequests" class="section">
+            <h2>Все заявки</h2>
+            <input type="text" id="searchInput" placeholder="Поиск по номеру, модели, клиенту">
+            <button onclick="searchRequests()">Найти</button>
+            <div id="allRequestsList"></div>
+        </div>
+
+        <!-- Регистрация заявки (оператор вводит данные клиента) -->
+        <div id="registerRequest" class="section">
+            <h2>Регистрация новой заявки</h2>
+            <form id="registerForm">
+                <h3>Данные клиента</h3>
+                <input type="text" id="clientFio" placeholder="ФИО клиента" required>
+                <input type="text" id="clientPhone" placeholder="Телефон" required>
+
+                <h3>Данные автомобиля</h3>
+                <input type="text" id="regCarType" placeholder="Тип автомобиля" required>
+                <input type="text" id="regCarModel" placeholder="Модель" required>
+                <textarea id="regProblem" placeholder="Описание проблемы" required></textarea>
+
+                <button type="submit">Зарегистрировать заявку</button>
+            </form>
+            <div id="registerResult"></div>
+        </div>
+
+        <!-- Аналитика -->
+        <div id="analytics" class="section">
+            <h2>Аналитика</h2>
+            <button onclick="calculateAverageTime()">Рассчитать среднее время ремонта</button>
+            <div id="averageTimeResult"></div>
+
+            <h3>Статистика по статусам</h3>
+            <div id="statusStats"></div>
+        </div>
+    </div>
+    <script src="js/auth.js"></script>
+    <script src="js/operator.js"></script>
+</body>
+</html>
