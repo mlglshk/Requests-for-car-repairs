@@ -1,0 +1,414 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Менеджер качества</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Панель менеджера качества</h1>
+            <div class="user-info">
+                <span class="user-name" id="userName"></span>
+                <span>Менеджер</span>
+                <button onclick="logout()">Выйти</button>
+            </div>
+        </div>
+
+        <!-- Панель уведомлений -->
+        <div class="alert-panel warning" id="helpAlert" style="display: none;">
+            <span class="alert-count" id="helpCount">0</span>
+            <span>запросов помощи от механиков</span>
+            <button onclick="showTab('helpRequests')">Просмотреть</button>
+        </div>
+
+        <!-- Статистика -->
+        <div class="statistics-panel">
+            <div class="stat-card">
+                <h3>Всего заявок</h3>
+                <div class="value" id="totalCount">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>В процессе</h3>
+                <div class="value" id="inProgressCount">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Готово к выдаче</h3>
+                <div class="value" id="readyCount">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Просрочено</h3>
+                <div class="value warning" id="overdueCount">0</div>
+            </div>
+        </div>
+
+        <!-- Навигация -->
+        <div class="nav">
+            <button class="active" onclick="showTab('allRequests')">Все заявки</button>
+            <button onclick="showTab('helpRequests')">Запросы помощи</button>
+            <button onclick="showTab('qrGeneration')">QR-коды</button>
+        </div>
+
+        <!-- Вкладка: Все заявки -->
+        <div id="allRequestsTab" class="tab active">
+            <h2>Все заявки</h2>
+            <table class="request-table">
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Клиент</th>
+                        <th>Автомобиль</th>
+                        <th>Проблема</th>
+                        <th>Статус</th>
+                        <th>Механик</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody id="requestsTable">
+                    <tr><td colspan="7">Загрузка...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Вкладка: Запросы помощи -->
+        <div id="helpRequestsTab" class="tab">
+            <h2>Запросы помощи от механиков</h2>
+            <table class="request-table">
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Механик</th>
+                        <th>Проблема</th>
+                        <th>Комментарий</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody id="helpTable">
+                    <tr><td colspan="5">Загрузка...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Вкладка: QR-коды -->
+        <div id="qrGenerationTab" class="tab">
+            <h2>Генерация QR-кодов для оценки</h2>
+            <table class="request-table">
+                <thead>
+                    <tr>
+                        <th>№</th>
+                        <th>Клиент</th>
+                        <th>Автомобиль</th>
+                        <th>Статус</th>
+                        <th>QR-код</th>
+                    </tr>
+                </thead>
+                <tbody id="qrTable">
+                    <tr><td colspan="5">Загрузка...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Модальное окно для продления срока -->
+    <div id="extendModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('extendModal')">&times;</span>
+            <h2>Продление срока заявки</h2>
+            <p id="extendRequestInfo"></p>
+            <div class="form-group">
+                <label>Причина продления:</label>
+                <textarea id="extendReason" rows="3" placeholder="Укажите причину..."></textarea>
+            </div>
+            <button onclick="extendDeadline()">Продлить срок</button>
+        </div>
+    </div>
+
+    <!-- Модальное окно для привлечения механика -->
+    <div id="assignModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('assignModal')">&times;</span>
+            <h2>Привлечь механика</h2>
+            <p id="assignRequestInfo"></p>
+            <div class="form-group">
+                <label>Выберите механика:</label>
+                <select id="mechanicSelect"></select>
+            </div>
+            <div class="form-group">
+                <label>Комментарий:</label>
+                <textarea id="assignComment" rows="3"></textarea>
+            </div>
+            <button onclick="assignMechanic()">Привлечь</button>
+        </div>
+    </div>
+
+    <!-- Модальное окно с QR-кодом -->
+    <div id="qrModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('qrModal')">&times;</span>
+            <h2>QR-код для оценки</h2>
+            <div id="qrContainer" style="text-align: center; padding: 20px;"></div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script>
+        let currentUser = null;
+        let currentRequestId = null;
+        let allRequests = [];
+        let allUsers = [];
+        let allComments = [];
+
+        const surveyUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSdhZcExx6LSIXxk0ub55mSu-WIh23WYdGG9HY5EZhLDo7P8eA/viewform?usp=sf_link';
+
+        document.addEventListener('DOMContentLoaded', async function () {
+            currentUser = app.getUser();
+            if (!currentUser) {
+                window.location.href = 'authorization.html';
+                return;
+            }
+
+            document.getElementById('userName').textContent = currentUser.fio || currentUser.login;
+
+            await loadAllData();
+        });
+
+        async function loadAllData() {
+            try {
+                // Загружаем пользователей
+                allUsers = await apiGet('/ManagerData/users');
+                console.log('Загружено пользователей:', allUsers.length);
+
+                // Загружаем заявки
+                allRequests = await apiGet('/ManagerData/requests');
+                console.log('Загружено заявок:', allRequests.length);
+                console.log('Первая заявка:', allRequests[0]); // Для отладки
+
+                // Загружаем комментарии
+                try {
+                    allComments = await apiGet('/ManagerData/comments');
+                    console.log('Загружено комментариев:', allComments.length);
+                } catch (error) {
+                    console.log('Комментарии не загружены');
+                    allComments = [];
+                }
+
+                // Обновляем интерфейс
+                updateStatistics();
+                displayAllRequests();
+                displayQRRequests();
+                checkHelpRequests();
+
+            } catch (error) {
+                console.error('Ошибка загрузки данных:', error);
+                document.getElementById('requestsTable').innerHTML =
+                    '<tr><td colspan="7">Ошибка загрузки данных: ' + error.message + '</td></tr>';
+            }
+        }
+
+        function updateStatistics() {
+            const total = allRequests.length;
+            const inProgress = allRequests.filter(r => r.requestStatus === 'В процессе ремонта').length;
+            const ready = allRequests.filter(r => r.requestStatus === 'Готова к выдаче').length;
+
+            // Просроченные (более 7 дней)
+            const now = new Date();
+            const overdue = allRequests.filter(r => {
+                if (r.requestStatus === 'Готова к выдаче' || r.requestStatus === 'Завершена') return false;
+                const startDate = new Date(r.startDate);
+                const days = Math.floor((now - startDate) / (1000 * 60 * 60 * 24));
+                return days > 7;
+            }).length;
+
+            document.getElementById('totalCount').textContent = total;
+            document.getElementById('inProgressCount').textContent = inProgress;
+            document.getElementById('readyCount').textContent = ready;
+            document.getElementById('overdueCount').textContent = overdue;
+        }
+
+        function getUserName(userId) {
+            if (!userId) return 'Не назначен';
+            const user = allUsers.find(u => u.userID === userId);
+            return user ? user.fio : `ID: ${userId}`;
+        }
+
+        function displayAllRequests() {
+            const tbody = document.getElementById('requestsTable');
+
+            if (allRequests.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7">Нет заявок</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = allRequests.map(r => {
+                let statusClass = '';
+                if (r.requestStatus === 'В процессе ремонта') statusClass = 'status-progress';
+                else if (r.requestStatus === 'Готова к выдаче') statusClass = 'status-ready';
+                else if (r.requestStatus === 'Новая заявка') statusClass = 'status-new';
+
+                return `<tr>
+                        <td>${r.requestID}</td>
+                        <td>${getUserName(r.clientID)}</td>
+                        <td>${r.carType || ''} ${r.carModel || ''}</td>
+                        <td>${r.problemDescription || ''}</td>
+                        <td><span class="status-badge ${statusClass}">${r.requestStatus}</span></td>
+                        <td>${getUserName(r.masterID)}</td>
+                        <td>
+                            <button class="action-btn extend-btn" onclick="openExtendModal(${r.requestID})">📅 Продлить</button>
+                            <button class="action-btn assign-btn" onclick="openAssignModal(${r.requestID})">👥 Привлечь</button>
+                        </td>
+                    </tr>`;
+            }).join('');
+        }
+
+        function displayQRRequests() {
+            const tbody = document.getElementById('qrTable');
+
+            const readyRequests = allRequests.filter(r => r.requestStatus === 'Готова к выдаче');
+
+            if (readyRequests.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5">Нет заявок готовых к выдаче</td></tr>';
+                return;
+            }
+
+            tbody.innerHTML = readyRequests.map(r => {
+                return `<tr>
+                        <td>${r.requestID}</td>
+                        <td>${getUserName(r.clientID)}</td>
+                        <td>${r.carType || ''} ${r.carModel || ''}</td>
+                        <td>${r.requestStatus}</td>
+                        <td>
+                            <button class="action-btn qr-btn" onclick="generateQR(${r.requestID})">📱 Сгенерировать QR</button>
+                        </td>
+                    </tr>`;
+            }).join('');
+        }
+
+        function checkHelpRequests() {
+            if (!allComments || allComments.length === 0) {
+                document.getElementById('helpAlert').style.display = 'none';
+                document.getElementById('helpTable').innerHTML = '<tr><td colspan="5">Нет запросов помощи</td></tr>';
+                return;
+            }
+
+            const helpComments = allComments.filter(c =>
+                c.message.toLowerCase().includes('помощь') ||
+                c.message.toLowerCase().includes('help')
+            );
+
+            if (helpComments.length > 0) {
+                document.getElementById('helpCount').textContent = helpComments.length;
+                document.getElementById('helpAlert').style.display = 'flex';
+
+                const tbody = document.getElementById('helpTable');
+                tbody.innerHTML = helpComments.map(c => {
+                    const request = allRequests.find(r => r.requestID === c.requestID);
+                    return `<tr>
+                            <td>${c.requestID}</td>
+                            <td>${getUserName(c.masterID)}</td>
+                            <td>${request?.problemDescription || ''}</td>
+                            <td>${c.message}</td>
+                            <td>
+                                <button class="action-btn" onclick="respondToHelp(${c.requestID})">Ответить</button>
+                                <button class="action-btn assign-btn" onclick="openAssignModal(${c.requestID})">👥 Привлечь</button>
+                            </td>
+                        </tr>`;
+                }).join('');
+            } else {
+                document.getElementById('helpAlert').style.display = 'none';
+            }
+        }
+
+        function openExtendModal(requestId) {
+            currentRequestId = requestId;
+            const request = allRequests.find(r => r.requestID === requestId);
+
+            document.getElementById('extendRequestInfo').innerHTML = `
+                    <strong>Заявка №${requestId}</strong><br>
+                    Клиент: ${getUserName(request.clientID)}<br>
+                    Дата создания: ${new Date(request.startDate).toLocaleDateString()}<br>
+                    Статус: ${request.requestStatus}
+                `;
+
+            document.getElementById('extendModal').style.display = 'block';
+        }
+
+        function extendDeadline() {
+            const reason = document.getElementById('extendReason').value;
+            if (!reason) {
+                alert('Укажите причину продления');
+                return;
+            }
+            alert(`Срок заявки ${currentRequestId} продлен. Причина: ${reason}`);
+            closeModal('extendModal');
+            document.getElementById('extendReason').value = '';
+        }
+
+        function openAssignModal(requestId) {
+            currentRequestId = requestId;
+            const request = allRequests.find(r => r.requestID === requestId);
+
+            document.getElementById('assignRequestInfo').innerHTML = `
+                    <strong>Заявка №${requestId}</strong><br>
+                    Проблема: ${request.problemDescription}<br>
+                    Текущий механик: ${getUserName(request.masterID)}
+                `;
+
+            const mechanics = allUsers.filter(u => u.type === 'Автомеханик');
+            const select = document.getElementById('mechanicSelect');
+            select.innerHTML = mechanics.map(m =>
+                `<option value="${m.userID}">${m.fio}</option>`
+            ).join('');
+
+            document.getElementById('assignModal').style.display = 'block';
+        }
+
+        function assignMechanic() {
+            const mechanicId = document.getElementById('mechanicSelect').value;
+            const comment = document.getElementById('assignComment').value;
+
+            if (!mechanicId) {
+                alert('Выберите механика');
+                return;
+            }
+
+            alert(`Механик привлечен к заявке ${currentRequestId}. Комментарий: ${comment || 'Не указан'}`);
+            closeModal('assignModal');
+            document.getElementById('assignComment').value = '';
+        }
+
+        function generateQR(requestId) {
+            const qrContainer = document.getElementById('qrContainer');
+            qrContainer.className = 'qr-container';
+            qrContainer.innerHTML = `
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(surveyUrl + '?request=' + requestId)}"
+             alt="QR-код для оценки">
+        <p><strong>Заявка №${requestId}</strong></p>
+        <p>Отсканируйте для оценки качества</p>
+        <button onclick="window.print()">🖨️ Распечатать</button>
+    `;
+            document.getElementById('qrModal').style.display = 'block';
+        }
+
+        function respondToHelp(requestId) {
+            alert(`Ответ отправлен механику по заявке ${requestId}`);
+        }
+
+        function showTab(tabName) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function logout() {
+            app.logout();
+        }
+    </script>
+</body>
+</html>

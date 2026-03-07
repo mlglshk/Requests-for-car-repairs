@@ -102,3 +102,4 @@ C:\Users\user\source\repos\RequestsForCarRepairs\RequestsForCarRepairs\obj\Debug
 C:\Users\user\source\repos\RequestsForCarRepairs\RequestsForCarRepairs\obj\Debug\net8.0\RequestsForCarRepairs.pdb
 C:\Users\user\source\repos\RequestsForCarRepairs\RequestsForCarRepairs\obj\Debug\net8.0\RequestsForCarRepairs.genruntimeconfig.cache
 C:\Users\user\source\repos\RequestsForCarRepairs\RequestsForCarRepairs\obj\Debug\net8.0\ref\RequestsForCarRepairs.dll
+C:\Users\user\source\repos\RequestsForCarRepairs\RequestsForCarRepairs\bin\Debug\net8.0\appsettings.json

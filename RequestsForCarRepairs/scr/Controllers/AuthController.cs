@@ -1,48 +1,93 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using RequestsForCarRepairs.API.Data;
 using RequestsForCarRepairs.API.Models;
-using RequestsForCarRepairs.API.DTOs;
+using RequestsForCarRepairs.API.Services;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Threading.Tasks;
 
-namespace RequestsForCarRepairs.API.Controllers;
-
-[ApiController]
-[Route("api/[controller]")]
-public class AuthController : ControllerBase
+namespace RequestsForCarRepairs.API.Controllers
 {
-    private readonly ApplicationDbContext _context;
-
-    public AuthController(ApplicationDbContext context)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class AuthController : ControllerBase
     {
-        _context = context;
-    }
+        private readonly IUserService _userService;
+        private readonly ILogger<AuthController> _logger;
 
-    [HttpPost("login")]
-    public async Task<IActionResult> Login([FromBody] LoginModel loginModel)
-    {
-        if (loginModel == null || string.IsNullOrEmpty(loginModel.Login) || string.IsNullOrEmpty(loginModel.Password))
+        public AuthController(IUserService userService, ILogger<AuthController> logger)
         {
-            return BadRequest(new { message = "Логин и пароль обязательны" });
+            _userService = userService;
+            _logger = logger;
         }
 
-        // Простая проверка логина и пароля из БД
-        var user = await _context.Users
-            .FirstOrDefaultAsync(u => u.Login == loginModel.Login && u.Password == loginModel.Password);
-
-        if (user == null)
+        [HttpPost("login")]
+        public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
-            return Unauthorized(new { message = "Неверный логин или пароль" });
+            try
+            {
+                _logger.LogInformation($"Попытка входа: {model?.Login}");
+
+                // Проверка модели
+                if (model == null)
+                {
+                    _logger.LogWarning("Модель логина пустая");
+                    return BadRequest(new { error = "Некорректные данные запроса" });
+                }
+
+                if (string.IsNullOrEmpty(model.Login) || string.IsNullOrEmpty(model.Password))
+                {
+                    _logger.LogWarning("Логин или пароль пустые");
+                    return BadRequest(new { error = "Логин и пароль обязательны" });
+                }
+
+                // Проверка сервиса
+                if (_userService == null)
+                {
+                    _logger.LogError("UserService не инициализирован");
+                    return StatusCode(500, new { error = "Ошибка конфигурации сервера" });
+                }
+
+                _logger.LogInformation($"Вызов AuthenticateAsync для пользователя: {model.Login}");
+
+                var user = await _userService.AuthenticateAsync(model.Login, model.Password);
+
+                if (user == null)
+                {
+                    _logger.LogWarning($"Неудачная попытка входа для логина: {model.Login}");
+                    return Unauthorized(new { error = "Неверный логин или пароль" });
+                }
+
+                _logger.LogInformation($"Успешный вход: {user.Login}, роль: {user.Type}");
+
+                // Возвращаем данные пользователя без пароля
+                var userData = new
+                {
+                    user.UserID,
+                    user.Fio,
+                    user.Phone,
+                    user.Login,
+                    user.Type
+                };
+
+                return Ok(userData);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Ошибка при авторизации: {ex.Message}");
+
+                // Временно показываем детали ошибки для отладки
+                if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
+                {
+                    return StatusCode(500, new
+                    {
+                        error = "Внутренняя ошибка сервера",
+                        details = ex.Message,
+                        stackTrace = ex.StackTrace
+                    });
+                }
+
+                return StatusCode(500, new { error = "Внутренняя ошибка сервера" });
+            }
         }
-
-        // Возвращаем данные пользователя
-        var response = new
-        {
-            user.UserID,
-            user.Fio,
-            user.Type,
-            message = "Вход выполнен успешно"
-        };
-
-        return Ok(response);
     }
 }

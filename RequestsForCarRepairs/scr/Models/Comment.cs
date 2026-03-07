@@ -19,6 +19,9 @@ public class Comment
     [Column("requestid")]
     public int RequestID { get; set; }
 
+    [Column("createdat")]
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+
     [ForeignKey("MasterID")]
     public User Master { get; set; } = null!;
 

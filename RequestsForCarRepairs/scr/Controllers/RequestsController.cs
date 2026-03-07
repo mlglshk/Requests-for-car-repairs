@@ -1,187 +1,204 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using RequestsForCarRepairs.API.Data;
-using RequestsForCarRepairs.API.Models;
-using RequestsForCarRepairs.API.DTOs;
 using Microsoft.EntityFrameworkCore;
+using RequestsForCarRepairs.API.Models;
+using RequestsForCarRepairs.API.Data;
 
-namespace RequestsForCarRepairs.API.Controllers;
-
-[ApiController]
-[Route("api/[controller]")]
-public class RequestsController : ControllerBase
+namespace RequestsForCarRepairs.API.Controllers
 {
-    private readonly ApplicationDbContext _context;
-
-    public RequestsController(ApplicationDbContext context)
+    [Route("api/[controller]")]
+    [ApiController]
+    public class RequestsController : ControllerBase
     {
-        _context = context;
-    }
+        private readonly ApplicationDbContext _context;
 
-    [HttpGet]
-    public async Task<IActionResult> GetAllRequests()
-    {
-        var requests = await _context.Requests
-            .Include(r => r.Client)
-            .Include(r => r.Master)
-            .ToListAsync();
-
-        var requestDtos = requests.Select(r => new RequestDto
+        public RequestsController(ApplicationDbContext context)
         {
-            RequestID = r.RequestID,
-            StartDate = r.StartDate,
-            CarType = r.CarType,
-            CarModel = r.CarModel,
-            ProblemDescription = r.ProblemDescription,
-            RequestStatus = r.RequestStatus,
-            CompletionDate = r.CompletionDate,
-            RepairParts = r.RepairParts,
-            MasterID = r.MasterID,
-            ClientID = r.ClientID
-        }).ToList();
+            _context = context;
+        }
 
-        return Ok(requestDtos);
-    }
-
-    [HttpGet("{id}")]
-    public async Task<IActionResult> GetRequestById(int id)
-    {
-        var request = await _context.Requests
-            .Include(r => r.Client)
-            .Include(r => r.Master)
-            .FirstOrDefaultAsync(r => r.RequestID == id);
-
-        if (request == null)
-            return NotFound($"Заявка с ID {id} не найдена");
-
-        var requestDto = new RequestDto
+        // GET: api/Requests
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<object>>> GetRequests() // ИЗМЕНЕНО: возвращаем object вместо Request
         {
-            RequestID = request.RequestID,
-            StartDate = request.StartDate,
-            CarType = request.CarType,
-            CarModel = request.CarModel,
-            ProblemDescription = request.ProblemDescription,
-            RequestStatus = request.RequestStatus,
-            CompletionDate = request.CompletionDate,
-            RepairParts = request.RepairParts,
-            MasterID = request.MasterID,
-            ClientID = request.ClientID
-        };
+            try
+            {
+                // ИЗМЕНЕНО: выбираем только нужные поля, без навигационных свойств
+                var requests = await _context.Requests
+                    .Select(r => new
+                    {
+                        r.RequestID,
+                        r.StartDate,
+                        r.CarType,
+                        r.CarModel,
+                        r.ProblemDescription,
+                        r.RequestStatus,
+                        r.CompletionDate,
+                        r.RepairParts,
+                        r.MasterID,
+                        r.ClientID
+                    })
+                    .ToListAsync();
 
-        return Ok(requestDto);
-    }
+                return Ok(requests);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Ошибка: {ex.Message}");
+            }
+        }
 
-    [HttpGet("client/{clientId}")]
-    public async Task<IActionResult> GetRequestsByClient(int clientId)
-    {
-        var requests = await _context.Requests
-            .Include(r => r.Client)
-            .Include(r => r.Master)
-            .Where(r => r.ClientID == clientId)
-            .ToListAsync();
-
-        var requestDtos = requests.Select(r => new RequestDto
+        // GET: api/Requests/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<object>> GetRequest(int id) // ИЗМЕНЕНО: возвращаем object
         {
-            RequestID = r.RequestID,
-            StartDate = r.StartDate,
-            CarType = r.CarType,
-            CarModel = r.CarModel,
-            ProblemDescription = r.ProblemDescription,
-            RequestStatus = r.RequestStatus,
-            CompletionDate = r.CompletionDate,
-            RepairParts = r.RepairParts,
-            MasterID = r.MasterID,
-            ClientID = r.ClientID
-        }).ToList();
+            try
+            {
+                var request = await _context.Requests
+                    .Where(r => r.RequestID == id)
+                    .Select(r => new
+                    {
+                        r.RequestID,
+                        r.StartDate,
+                        r.CarType,
+                        r.CarModel,
+                        r.ProblemDescription,
+                        r.RequestStatus,
+                        r.CompletionDate,
+                        r.RepairParts,
+                        r.MasterID,
+                        r.ClientID
+                    })
+                    .FirstOrDefaultAsync();
 
-        return Ok(requestDtos);
-    }
+                if (request == null)
+                {
+                    return NotFound();
+                }
 
-    [HttpGet("status/{status}")]
-    public async Task<IActionResult> GetRequestsByStatus(string status)
-    {
-        var requests = await _context.Requests
-            .Include(r => r.Client)
-            .Include(r => r.Master)
-            .Where(r => r.RequestStatus == status)
-            .ToListAsync();
+                return Ok(request);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Ошибка: {ex.Message}");
+            }
+        }
 
-        var requestDtos = requests.Select(r => new RequestDto
+        // PUT: api/Requests/5 - полное обновление
+        [HttpPut("{id}")]
+        public async Task<IActionResult> PutRequest(int id, Request request)
         {
-            RequestID = r.RequestID,
-            StartDate = r.StartDate,
-            CarType = r.CarType,
-            CarModel = r.CarModel,
-            ProblemDescription = r.ProblemDescription,
-            RequestStatus = r.RequestStatus,
-            CompletionDate = r.CompletionDate,
-            RepairParts = r.RepairParts,
-            MasterID = r.MasterID,
-            ClientID = r.ClientID
-        }).ToList();
+            if (id != request.RequestID)
+            {
+                return BadRequest();
+            }
 
-        return Ok(requestDtos);
-    }
+            try
+            {
+                _context.Entry(request).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
 
-    [HttpPost]
-    public async Task<IActionResult> CreateRequest([FromBody] CreateRequestDto requestDto)
-    {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
-        var request = new Request
+        // POST: api/Requests/5 - частичное обновление (для совместимости)
+        [HttpPost("{id}")]
+        public async Task<IActionResult> UpdateRequest(int id, [FromBody] UpdateRequestModel model)
         {
-            StartDate = requestDto.StartDate,
-            CarType = requestDto.CarType,
-            CarModel = requestDto.CarModel,
-            ProblemDescription = requestDto.ProblemDescription,
-            RequestStatus = requestDto.RequestStatus,
-            CompletionDate = requestDto.CompletionDate,
-            RepairParts = requestDto.RepairParts,
-            MasterID = requestDto.MasterID,
-            ClientID = requestDto.ClientID
-        };
+            try
+            {
+                var request = await _context.Requests.FindAsync(id);
+                if (request == null) return NotFound();
 
-        _context.Requests.Add(request);
-        await _context.SaveChangesAsync();
+                if (model.MasterId != null) request.MasterID = model.MasterId;
+                if (!string.IsNullOrEmpty(model.Status))
+                {
+                    request.RequestStatus = model.Status;
+                    if (model.Status == "Готова к выдаче")
+                    {
+                        request.CompletionDate = DateTime.Now;
+                    }
+                }
 
-        return CreatedAtAction(nameof(GetRequestById), new { id = request.RequestID }, request);
-    }
+                await _context.SaveChangesAsync();
+                return Ok(new { message = "Заявка обновлена" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateRequest(int id, [FromBody] UpdateRequestDto requestDto)
-    {
-        if (id != requestDto.RequestID)
-            return BadRequest("ID в URL и теле запроса не совпадают");
+        // POST: api/Requests - создание новой заявки
+        [HttpPost]
+        public async Task<ActionResult<Request>> PostRequest([FromBody] CreateRequestModel model)
+        {
+            try
+            {
+                var request = new Request
+                {
+                    CarType = model.CarType,
+                    CarModel = model.CarModel,
+                    ProblemDescription = model.ProblemDescription,
+                    ClientID = model.ClientId,
+                    RequestStatus = "Новая заявка",
+                    StartDate = DateTime.UtcNow,
+                    MasterID = null,
+                    CompletionDate = null,
+                    RepairParts = null
+                };
 
-        var request = await _context.Requests.FindAsync(id);
-        if (request == null)
-            return NotFound($"Заявка с ID {id} не найдена");
+                _context.Requests.Add(request);
+                await _context.SaveChangesAsync();
 
-        request.StartDate = requestDto.StartDate;
-        request.CarType = requestDto.CarType;
-        request.CarModel = requestDto.CarModel;
-        request.ProblemDescription = requestDto.ProblemDescription;
-        request.RequestStatus = requestDto.RequestStatus;
-        request.CompletionDate = requestDto.CompletionDate;
-        request.RepairParts = requestDto.RepairParts;
-        request.MasterID = requestDto.MasterID;
-        request.ClientID = requestDto.ClientID;
+                // ИЗМЕНЕНО: возвращаем созданный объект
+                return CreatedAtAction(nameof(GetRequest), new { id = request.RequestID }, request);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Ошибка: {ex.Message}");
+            }
+        }
 
-        await _context.SaveChangesAsync();
+        // DELETE: api/Requests/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteRequest(int id)
+        {
+            try
+            {
+                var request = await _context.Requests.FindAsync(id);
+                if (request == null)
+                {
+                    return NotFound();
+                }
 
-        return Ok(request);
-    }
+                _context.Requests.Remove(request);
+                await _context.SaveChangesAsync();
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteRequest(int id)
-    {
-        var request = await _context.Requests.FindAsync(id);
-        if (request == null)
-            return NotFound($"Заявка с ID {id} не найдена");
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
 
-        _context.Requests.Remove(request);
-        await _context.SaveChangesAsync();
+        // Модели
+        public class UpdateRequestModel
+        {
+            public int? MasterId { get; set; }
+            public string? Status { get; set; }
+        }
 
-        return NoContent();
+        public class CreateRequestModel
+        {
+            public string CarType { get; set; } = string.Empty;
+            public string CarModel { get; set; } = string.Empty;
+            public string ProblemDescription { get; set; } = string.Empty;
+            public int ClientId { get; set; }
+        }
     }
 }

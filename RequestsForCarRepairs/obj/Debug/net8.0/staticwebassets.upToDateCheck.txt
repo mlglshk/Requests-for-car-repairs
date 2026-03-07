@@ -1,5 +1,10 @@
+wwwroot\authorization.html
+wwwroot\css\style.css
+wwwroot\customer.html
+wwwroot\dispatcher.html
 wwwroot\favicon.ico
-wwwroot\js\authorization.js
+wwwroot\index.html
+wwwroot\js\auth.js
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css
@@ -57,7 +62,6 @@ wwwroot\lib\jquery\dist\jquery.js
 wwwroot\lib\jquery\dist\jquery.min.js
 wwwroot\lib\jquery\dist\jquery.min.map
 wwwroot\lib\jquery\LICENSE.txt
-wwwroot\css\style.css
-wwwroot\customer.html
-wwwroot\index.html
+wwwroot\manager.html
 wwwroot\operator.html
+wwwroot\mechanic.html

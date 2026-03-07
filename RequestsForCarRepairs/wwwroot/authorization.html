@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="login-form">
+        <h2>Вход в систему</h2>
+        <input type="text" id="login" placeholder="Логин" value="login1">
+        <input type="password" id="password" placeholder="Пароль" value="pass1">
+        <button onclick="login()">Войти</button>
+        <div id="error" class="error"></div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script>
+        async function login() {
+            const login = document.getElementById('login').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const users = await apiGet('/Users');
+                const user = users.find(u => u.login === login && u.password === password);
+
+                if (user) {
+                    app.setUser(user);
+
+                    if (user.type === 'Менеджер') window.location.href = 'manager.html';
+                    else if (user.type === 'Автомеханик') window.location.href = 'mechanic.html';
+                    else if (user.type === 'Оператор') window.location.href = 'dispatcher.html';
+                    else if (user.type === 'Заказчик') window.location.href = 'customer.html';
+                    else window.location.href = 'authorization.html';
+                } else {
+                    document.getElementById('error').textContent = 'Неверный логин или пароль';
+                }
+            } catch (error) {
+                document.getElementById('error').textContent = 'Ошибка подключения к серверу';
+            }
+        }
+    </script>
+</body>
+</html>
