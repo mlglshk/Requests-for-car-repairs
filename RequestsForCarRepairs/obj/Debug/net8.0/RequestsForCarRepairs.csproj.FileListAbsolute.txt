@@ -1,5 +1,3 @@
-C:\Users\user\source\repos\RequestsForCarRepairs\RequestsForCarRepairs\bin\Debug\net8.0\scr\appsettings.Development.json
-C:\Users\user\source\repos\RequestsForCarRepairs\RequestsForCarRepairs\bin\Debug\net8.0\scr\appsettings.json
 C:\Users\user\source\repos\RequestsForCarRepairs\RequestsForCarRepairs\bin\Debug\net8.0\RequestsForCarRepairs.staticwebassets.runtime.json
 C:\Users\user\source\repos\RequestsForCarRepairs\RequestsForCarRepairs\bin\Debug\net8.0\RequestsForCarRepairs.staticwebassets.endpoints.json
 C:\Users\user\source\repos\RequestsForCarRepairs\RequestsForCarRepairs\bin\Debug\net8.0\RequestsForCarRepairs.exe

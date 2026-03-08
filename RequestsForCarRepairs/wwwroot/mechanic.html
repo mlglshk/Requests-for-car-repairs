@@ -3,8 +3,92 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Автомеханик - Мои заявки</title>
+    <title>Автомеханик - Панель управления</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Стили для модального окна */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 700px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #666;
+        }
+
+            .close:hover {
+                color: #1a73e8;
+            }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #666;
+            flex: 1;
+        }
+
+            .tab-btn.active {
+                color: #1a73e8;
+                border-bottom: 2px solid #1a73e8;
+                font-weight: bold;
+            }
+
+        .detail-tab {
+            padding: 15px 0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+            color: white;
+        }
+
+        .status-progress {
+            background: #2196F3;
+        }
+
+        .status-ready {
+            background: #4CAF50;
+        }
+
+        .status-new {
+            background: #ff9800;
+        }
+
+        .status-waiting {
+            background: #9C27B0;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -37,165 +121,59 @@
         </div>
     </div>
 
+    <!-- ========== МОДАЛЬНОЕ ОКНО (ДОБАВЬ ЭТО) ========== -->
+    <div id="requestDetailModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('requestDetailModal')">&times;</span>
+            <h2 id="detailRequestTitle">Заявка №</h2>
+
+            <div id="detailRequestInfo" style="margin-bottom: 20px; padding: 10px; background: #f5f5f5; border-radius: 5px;"></div>
+
+            <!-- Кнопки вкладок -->
+            <div style="display: flex; border-bottom: 2px solid #1a73e8; margin-bottom: 15px;">
+                <button class="tab-btn active" onclick="showDetailTab('info')">📋 Информация</button>
+                <button class="tab-btn" onclick="showDetailTab('comments')">💬 Комментарии</button>
+                <button class="tab-btn" onclick="showDetailTab('parts')">🔧 Запчасти</button>
+            </div>
+
+            <!-- Вкладка Информация -->
+            <div id="detailInfoTab" class="detail-tab">
+                <h3>Управление статусом</h3>
+                <select id="detailStatus" style="width: 100%; padding: 8px; margin-bottom: 10px;">
+                    <option value="В процессе ремонта">🔧 В процессе ремонта</option>
+                    <option value="Ожидание автозапчастей">⏳ Ожидание запчастей</option>
+                    <option value="Готова к выдаче">✅ Готова к выдаче</option>
+                </select>
+                <button onclick="updateStatusFromDetail()" style="width: 100%;">Обновить статус</button>
+            </div>
+
+            <!-- Вкладка Комментарии -->
+            <div id="detailCommentsTab" class="detail-tab" style="display: none;">
+                <h3>Комментарии к заявке</h3>
+                <div id="commentsList" style="max-height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; margin-bottom: 10px;"></div>
+
+                <textarea id="newComment" placeholder="Ваш комментарий..." rows="3" style="width: 100%; margin-bottom: 10px;"></textarea>
+                <button onclick="addComment()" style="width: 100%; margin-bottom: 5px;">💬 Добавить комментарий</button>
+                <button onclick="requestHelp()" style="width: 100%; background: #ff9800;">🆘 Запросить помощь менеджера</button>
+            </div>
+
+            <!-- Вкладка Запчасти -->
+            <div id="detailPartsTab" class="detail-tab" style="display: none;">
+                <h3>Заказанные запчасти</h3>
+                <div id="partsList" style="max-height: 200px; overflow-y: auto; border: 1px solid #ddd; padding: 10px; margin-bottom: 10px;"></div>
+
+                <h4>Добавить запчасть</h4>
+                <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+                    <input type="text" id="partName" placeholder="Наименование" style="flex: 2; padding: 8px;">
+                    <input type="text" id="partNumber" placeholder="Артикул" style="flex: 1; padding: 8px;">
+                    <input type="number" id="partQuantity" placeholder="Кол-во" value="1" min="1" style="width: 80px; padding: 8px;">
+                </div>
+                <button onclick="addPart()" style="width: 100%; margin-top: 10px;">➕ Добавить запчасть</button>
+            </div>
+        </div>
+    </div>
+
     <script src="js/auth.js"></script>
-    <script>
-        let currentUser = null;
-        let allRequests = [];
-        let allUsers = [];
-
-        document.addEventListener('DOMContentLoaded', async function () {
-            currentUser = app.getUser();
-            if (!currentUser) {
-                window.location.href = 'authorization.html';
-                return;
-            }
-
-            // Проверяем роль (должен быть Автомеханик)
-            if (currentUser.type !== 'Автомеханик') {
-                alert(`Доступ запрещен. Ваша роль: ${currentUser.type}`);
-                window.location.href = 'authorization.html';
-                return;
-            }
-
-            document.getElementById('userName').textContent = currentUser.fio;
-            document.getElementById('userRole').textContent = currentUser.type;
-
-            await loadUsers();
-            await loadMyRequests();
-        });
-
-        async function loadUsers() {
-            try {
-                allUsers = await apiGet('/Users');
-                console.log('Загружено пользователей:', allUsers);
-            } catch (error) {
-                console.error('Ошибка загрузки пользователей:', error);
-            }
-        }
-
-        function getUserName(userId) {
-            if (!userId) return 'Не назначен';
-            const user = allUsers.find(u => u.userID === userId);
-            return user ? user.fio : `ID: ${userId}`;
-        }
-
-        function showTab(tabName) {
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
-
-            document.getElementById(tabName + 'Tab').classList.add('active');
-            event.target.classList.add('active');
-
-            if (tabName === 'myRequests') loadMyRequests();
-            if (tabName === 'availableRequests') loadAvailableRequests();
-        }
-
-        async function loadMyRequests() {
-            document.getElementById('debugInfo').innerHTML = 'Загрузка моих заявок...';
-
-            try {
-                allRequests = await apiGet('/Requests');
-                console.log('Текущий пользователь ID:', currentUser.userID);
-                console.log('Все заявки:', allRequests);
-
-                // ВАЖНО: В JSON поле называется masterID (с большой D), а не masterId
-                const myRequests = allRequests.filter(r => r.masterID === currentUser.userID);
-
-                document.getElementById('debugInfo').innerHTML = `✅ Найдено моих заявок: ${myRequests.length}`;
-                displayRequests(myRequests, 'myRequestsList', true);
-            } catch (error) {
-                document.getElementById('debugInfo').innerHTML = `❌ Ошибка: ${error.message}`;
-            }
-        }
-
-        async function loadAvailableRequests() {
-            document.getElementById('debugInfo').innerHTML = 'Загрузка доступных заявок...';
-
-            try {
-                allRequests = await apiGet('/Requests');
-                // ВАЖНО: masterID (с большой D) и статус 'Новая заявка'
-                const available = allRequests.filter(r => !r.masterID && r.requestStatus === 'Новая заявка');
-
-                document.getElementById('debugInfo').innerHTML = `✅ Доступно заявок: ${available.length}`;
-                displayRequests(available, 'availableRequestsList', false);
-            } catch (error) {
-                document.getElementById('debugInfo').innerHTML = `❌ Ошибка: ${error.message}`;
-            }
-        }
-
-        function displayRequests(requests, elementId, showActions) {
-            const container = document.getElementById(elementId);
-
-            if (!requests || requests.length === 0) {
-                container.innerHTML = '<p>Заявок не найдено</p>';
-                return;
-            }
-
-            container.innerHTML = requests.map(r => {
-                let statusClass = '';
-                if (r.requestStatus === 'В процессе ремонта') statusClass = 'status-progress';
-                else if (r.requestStatus === 'Готова к выдаче') statusClass = 'status-ready';
-                else if (r.requestStatus === 'Новая заявка') statusClass = 'status-new';
-
-                return `
-                        <div class="request-card">
-                            <h3>Заявка №${r.requestID}</h3>
-                            <p><strong>Клиент:</strong> ${getUserName(r.clientID)}</p>
-                            <p><strong>Автомобиль:</strong> ${r.carType || ''} ${r.carModel || ''}</p>
-                            <p><strong>Проблема:</strong> ${r.problemDescription || ''}</p>
-                            <p><strong>Статус:</strong> <span class="status-badge ${statusClass}">${r.requestStatus}</span></p>
-                            <p><strong>Дата:</strong> ${r.startDate ? new Date(r.startDate).toLocaleDateString() : '-'}</p>
-
-                            ${showActions ? `
-                                <select id="status-${r.requestID}" class="status-select">
-                                    <option value="В процессе ремонта" ${r.requestStatus === 'В процессе ремонта' ? 'selected' : ''}>В работе</option>
-                                    <option value="Готова к выдаче" ${r.requestStatus === 'Готова к выдаче' ? 'selected' : ''}>Готова к выдаче</option>
-                                </select>
-                                <button onclick="updateStatus(${r.requestID})">Обновить статус</button>
-                            ` : ''}
-
-                            ${!showActions && r.requestStatus === 'Новая заявка' ? `
-                                <button onclick="takeRequest(${r.requestID})">Взять в работу</button>
-                            ` : ''}
-                        </div>
-                    `;
-            }).join('');
-        }
-
-        async function takeRequest(requestId) {
-            try {
-                await apiPost(`/Requests/${requestId}`, {
-                    masterId: currentUser.userID,
-                    status: 'В процессе ремонта'
-                });
-
-                alert('✅ Заявка принята');
-                await loadMyRequests();
-                await loadAvailableRequests();
-            } catch (error) {
-                alert('❌ Ошибка: ' + error.message);
-            }
-        }
-
-        async function updateStatus(requestId) {
-            const status = document.getElementById(`status-${requestId}`).value;
-
-            try {
-                await apiPost(`/Requests/${requestId}`, {
-                    status: status
-                });
-
-                alert('✅ Статус обновлен');
-                await loadMyRequests();
-                await loadAvailableRequests();
-            } catch (error) {
-                alert('❌ Ошибка: ' + error.message);
-            }
-        }
-
-        function logout() {
-            app.logout();
-        }
-    </script>
+    <script src="js/mechanic.js"></script>
 </body>
 </html>

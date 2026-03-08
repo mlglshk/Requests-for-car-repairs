@@ -3,8 +3,10 @@ wwwroot\css\style.css
 wwwroot\customer.html
 wwwroot\dispatcher.html
 wwwroot\favicon.ico
-wwwroot\index.html
 wwwroot\js\auth.js
+wwwroot\js\customer.js
+wwwroot\js\dispatcher.js
+wwwroot\js\manager.js
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map
 wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css
@@ -63,5 +65,5 @@ wwwroot\lib\jquery\dist\jquery.min.js
 wwwroot\lib\jquery\dist\jquery.min.map
 wwwroot\lib\jquery\LICENSE.txt
 wwwroot\manager.html
-wwwroot\operator.html
 wwwroot\mechanic.html
+wwwroot\js\mechanic.js

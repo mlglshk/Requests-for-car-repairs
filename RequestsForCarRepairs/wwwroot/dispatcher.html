@@ -17,168 +17,140 @@
             </div>
         </div>
 
+        <!-- Отладочная информация -->
         <div style="margin-bottom: 10px; padding: 10px; background: #e8f0fe; border-radius: 5px;" id="debugInfo">
             Загрузка данных...
         </div>
 
-        <button onclick="loadData()" style="margin-bottom: 20px;">🔄 Обновить данные</button>
-        <button onclick="openCreateModal()" style="margin-bottom: 20px; background: #4CAF50;">+ Новая заявка</button>
+        <!-- Статистика -->
+        <div class="statistics-panel">
+            <div class="stat-card">
+                <h3>Всего заявок</h3>
+                <div class="value" id="totalCount">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>В работе</h3>
+                <div class="value" id="inProgressCount">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Завершено</h3>
+                <div class="value" id="completedCount">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Среднее время</h3>
+                <div class="value" id="avgTime">0 дн.</div>
+            </div>
+        </div>
 
-        <table class="request-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Дата</th>
-                    <th>Клиент</th>
-                    <th>Авто</th>
-                    <th>Проблема</th>
-                    <th>Статус</th>
-                    <th>Механик</th>
-                </tr>
-            </thead>
-            <tbody id="requestsTableBody">
-                <tr><td colspan="7">Загрузка...</td></tr>
-            </tbody>
-        </table>
+        <!-- Панель поиска -->
+        <div class="filter-panel">
+            <input type="text" id="searchInput" placeholder="Поиск по номеру, клиенту, авто...">
+            <select id="statusFilter">
+                <option value="">Все статусы</option>
+                <option value="Новая заявка">Новая</option>
+                <option value="В процессе ремонта">В процессе</option>
+                <option value="Ожидание автозапчастей">Ожидание</option>
+                <option value="Готова к выдаче">Готова</option>
+                <option value="Завершена">Завершена</option>
+            </select>
+            <button onclick="searchRequests()">🔍 Поиск</button>
+            <button onclick="resetFilters()">🔄 Сброс</button>
+            <button onclick="openCreateModal()" style="background: #4CAF50;">+ Новая заявка</button>
+        </div>
+
+        <!-- Навигация -->
+        <div class="nav">
+            <button class="active" onclick="showTab('allRequests')">Все заявки</button>
+            <button onclick="showTab('statistics')">Статистика</button>
+        </div>
+
+        <!-- Вкладка: Все заявки -->
+        <div id="allRequestsTab" class="tab active">
+            <table class="request-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Дата</th>
+                        <th>Клиент</th>
+                        <th>Авто</th>
+                        <th>Проблема</th>
+                        <th>Статус</th>
+                        <th>Механик</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody id="requestsTableBody">
+                    <tr><td colspan="8">Загрузка...</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Вкладка: Статистика -->
+        <div id="statisticsTab" class="tab">
+            <h2>Статистика по типам неисправностей</h2>
+            <table class="request-table">
+                <thead>
+                    <tr>
+                        <th>Тип неисправности</th>
+                        <th>Количество</th>
+                        <th>Процент</th>
+                    </tr>
+                </thead>
+                <tbody id="problemStatsTable">
+                    <tr><td colspan="3">Загрузка...</td></tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <!-- Модальное окно создания заявки -->
+    <!-- Модальное окно создания/редактирования заявки -->
     <div id="requestModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2>Новая заявка</h2>
-
-            <div class="form-group">
-                <label>Вид авто:</label>
-                <input type="text" id="carType" required>
-            </div>
-            <div class="form-group">
-                <label>Модель авто:</label>
-                <input type="text" id="carModel" required>
-            </div>
-            <div class="form-group">
-                <label>Описание проблемы:</label>
-                <textarea id="problemDescription" rows="3" required></textarea>
-            </div>
-            <div class="form-group">
-                <label>ID клиента:</label>
-                <input type="number" id="clientId" value="6" required>
-                <small>Заказчики: 6,7,8,9</small>
-            </div>
-            <button onclick="saveRequest()">Сохранить</button>
+            <span class="close" onclick="closeModal('requestModal')">&times;</span>
+            <h2 id="modalTitle">Новая заявка</h2>
+            <form id="requestForm" onsubmit="event.preventDefault();">
+                <div class="form-group">
+                    <label>Вид авто:</label>
+                    <input type="text" id="carType" required>
+                </div>
+                <div class="form-group">
+                    <label>Модель авто:</label>
+                    <input type="text" id="carModel" required>
+                </div>
+                <div class="form-group">
+                    <label>Описание проблемы:</label>
+                    <textarea id="problemDescription" rows="3" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>ФИО клиента:</label>
+                    <input type="text" id="clientFio" required>
+                </div>
+                <div class="form-group">
+                    <label>Номер телефона:</label>
+                    <input type="text" id="clientPhone" required>
+                </div>
+                <div class="form-group">
+                    <label>Назначить механика:</label>
+                    <select id="assignMechanic">
+                        <option value="">Не назначать</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Статус:</label>
+                    <select id="requestStatus">
+                        <option value="Новая заявка">Новая</option>
+                        <option value="В процессе ремонта">В процессе</option>
+                        <option value="Ожидание автозапчастей">Ожидание</option>
+                        <option value="Готова к выдаче">Готова</option>
+                        <option value="Завершена">Завершена</option>
+                    </select>
+                </div>
+                <button type="button" onclick="saveRequest()">Сохранить</button>
+            </form>
         </div>
     </div>
 
     <script src="js/auth.js"></script>
-    <script>
-        let currentUser = null;
-        let allUsers = [];
-
-        document.addEventListener('DOMContentLoaded', async function () {
-            currentUser = app.getUser();
-            if (!currentUser) {
-                window.location.href = 'authorization.html';
-                return;
-            }
-
-            if (currentUser.type !== 'Оператор') {
-                alert(`Доступ запрещен. Ваша роль: ${currentUser.type}`);
-                window.location.href = 'authorization.html';
-                return;
-            }
-
-            document.getElementById('userName').textContent = currentUser.fio || currentUser.login;
-            document.getElementById('userRole').textContent = currentUser.type;
-
-            await loadUsers();
-            await loadData();
-        });
-
-        async function loadUsers() {
-            try {
-                allUsers = await apiGet('/Users');
-                console.log('Загружено пользователей:', allUsers.length);
-            } catch (error) {
-                console.error('Ошибка загрузки пользователей:', error);
-            }
-        }
-
-        function getUserName(userId) {
-            if (!userId) return 'Не указан';
-            const user = allUsers.find(u => u.userID === userId);
-            return user ? user.fio : `ID: ${userId}`;
-        }
-
-        async function loadData() {
-            document.getElementById('debugInfo').innerHTML = 'Загрузка данных...';
-
-            try {
-                const requests = await apiGet('/Requests');
-                document.getElementById('debugInfo').innerHTML = `✅ Загружено заявок: ${requests.length}`;
-                displayRequests(requests);
-            } catch (error) {
-                document.getElementById('debugInfo').innerHTML = `❌ Ошибка: ${error.message}`;
-                console.error('Ошибка загрузки:', error);
-            }
-        }
-
-        function displayRequests(requests) {
-            const tbody = document.getElementById('requestsTableBody');
-
-            if (!requests || requests.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7">Нет заявок</td></tr>';
-                return;
-            }
-
-            tbody.innerHTML = requests.map(r => {
-                // Определяем класс статуса
-                let statusClass = '';
-                if (r.requestStatus === 'В процессе ремонта') statusClass = 'status-progress';
-                else if (r.requestStatus === 'Готова к выдаче') statusClass = 'status-ready';
-                else if (r.requestStatus === 'Новая заявка') statusClass = 'status-new';
-
-                return `<tr>
-                        <td>${r.requestID}</td>
-                        <td>${r.startDate ? new Date(r.startDate).toLocaleDateString() : '-'}</td>
-                        <td>${getUserName(r.clientID)}</td>
-                        <td>${r.carType || ''} ${r.carModel || ''}</td>
-                        <td>${(r.problemDescription || '').substring(0, 30)}</td>
-                        <td><span class="status-badge ${statusClass}">${r.requestStatus}</span></td>
-                        <td>${getUserName(r.masterID)}</td>
-                    </tr>`;
-            }).join('');
-        }
-
-        async function saveRequest() {
-            const newRequest = {
-                carType: document.getElementById('carType').value,
-                carModel: document.getElementById('carModel').value,
-                problemDescription: document.getElementById('problemDescription').value,
-                clientId: parseInt(document.getElementById('clientId').value),
-                requestStatus: 'Новая заявка'  // Исправлено: должно быть как в БД
-            };
-
-            try {
-                await apiPost('/Requests', newRequest);
-                alert('✅ Заявка создана');
-                closeModal();
-                await loadData();
-            } catch (error) {
-                alert('❌ Ошибка: ' + error.message);
-            }
-        }
-
-        function openCreateModal() {
-            document.getElementById('requestModal').style.display = 'block';
-        }
-
-        function closeModal() {
-            document.getElementById('requestModal').style.display = 'none';
-        }
-
-        function logout() {
-            app.logout();
-        }
-    </script>
+    <script src="js/dispatcher.js"></script>
 </body>
 </html>

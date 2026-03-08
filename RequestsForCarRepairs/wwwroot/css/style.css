@@ -420,3 +420,87 @@ button {
     .close:hover {
         color: #1a73e8;
     }
+* Стили для модального окна */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 700px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    color: #666;
+}
+
+    .close:hover {
+        color: #1a73e8;
+    }
+
+.tab-btn {
+    background: none;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    color: #666;
+}
+
+    .tab-btn.active {
+        color: #1a73e8;
+        border-bottom: 2px solid #1a73e8;
+        font-weight: bold;
+    }
+
+.detail-tab {
+    padding: 15px 0;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.status-progress {
+    background: #2196F3;
+    color: white;
+}
+
+.status-ready {
+    background: #4CAF50;
+    color: white;
+}
+
+.status-new {
+    background: #ff9800;
+    color: white;
+}
+
+.status-waiting {
+    background: #9C27B0;
+    color: white;
+}
