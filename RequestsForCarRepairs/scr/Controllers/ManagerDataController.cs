@@ -15,7 +15,7 @@ namespace RequestsForCarRepairs.API.Controllers
             _context = context;
         }
 
-        // GET: api/ManagerData/users
+        
         [HttpGet("users")]
         public async Task<ActionResult<IEnumerable<object>>> GetUsers()
         {
@@ -40,7 +40,7 @@ namespace RequestsForCarRepairs.API.Controllers
             }
         }
 
-        // GET: api/ManagerData/requests
+        
         [HttpGet("requests")]
         public async Task<ActionResult<IEnumerable<object>>> GetRequests()
         {
@@ -70,7 +70,7 @@ namespace RequestsForCarRepairs.API.Controllers
             }
         }
 
-        // GET: api/ManagerData/comments
+
         [HttpGet("comments")]
         public async Task<ActionResult<IEnumerable<object>>> GetComments()
         {
@@ -94,7 +94,7 @@ namespace RequestsForCarRepairs.API.Controllers
             }
         }
 
-        // GET: api/ManagerData/mechanics
+
         [HttpGet("mechanics")]
         public async Task<ActionResult<IEnumerable<object>>> GetMechanics()
         {

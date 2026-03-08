@@ -16,7 +16,7 @@ namespace RequestsForCarRepairs.API.Controllers
             _context = context;
         }
 
-        // GET: api/mechanic/requests/5?status=в работе
+      
         [HttpGet("requests/{mechanicId}")]
         public async Task<ActionResult<IEnumerable<Request>>> GetMechanicRequests(int mechanicId, [FromQuery] string? status)
         {
@@ -24,29 +24,29 @@ namespace RequestsForCarRepairs.API.Controllers
                 .Include(r => r.Client)
                 .Include(r => r.Comments)
                     .ThenInclude(c => c.Master)
-                .Where(r => r.MasterID == mechanicId); // Используем MasterID
+                .Where(r => r.MasterID == mechanicId); 
 
             if (!string.IsNullOrEmpty(status))
             {
-                query = query.Where(r => r.RequestStatus == status); // Используем RequestStatus
+                query = query.Where(r => r.RequestStatus == status); 
             }
 
             return await query.ToListAsync();
         }
 
-        // GET: api/mechanic/available
+        
         [HttpGet("available")]
         public async Task<ActionResult<IEnumerable<Request>>> GetAvailableRequests()
         {
             var requests = await _context.Requests
                 .Include(r => r.Client)
-                .Where(r => r.MasterID == null && r.RequestStatus == "новая") // Свободные заявки
+                .Where(r => r.MasterID == null && r.RequestStatus == "новая") 
                 .ToListAsync();
 
             return Ok(requests);
         }
 
-        // PUT: api/mechanic/take/5
+      
         [HttpPut("take/{requestId}")]
         public async Task<IActionResult> TakeRequest(int requestId, [FromBody] TakeRequestModel model)
         {
@@ -57,13 +57,13 @@ namespace RequestsForCarRepairs.API.Controllers
             }
 
             request.MasterID = model.MechanicId;
-            request.RequestStatus = "в работе"; // Меняем статус
+            request.RequestStatus = "в работе"; 
 
             await _context.SaveChangesAsync();
             return Ok(request);
         }
 
-        // PUT: api/mechanic/status/5
+       
         [HttpPut("status/{requestId}")]
         public async Task<IActionResult> UpdateStatus(int requestId, [FromBody] UpdateStatusModel model)
         {
@@ -77,19 +77,19 @@ namespace RequestsForCarRepairs.API.Controllers
 
             if (model.Status == "завершена")
             {
-                request.CompletionDate = DateTime.Now; // Устанавливаем дату завершения
+                request.CompletionDate = DateTime.Now; 
             }
 
             if (!string.IsNullOrEmpty(model.RepairParts))
             {
-                request.RepairParts = model.RepairParts; // Запчасти если есть
+                request.RepairParts = model.RepairParts; 
             }
 
             await _context.SaveChangesAsync();
             return Ok(request);
         }
 
-        // GET: api/mechanic/comments/5
+      
         [HttpGet("comments/{requestId}")]
         public async Task<ActionResult<IEnumerable<Comment>>> GetComments(int requestId)
         {
@@ -99,7 +99,7 @@ namespace RequestsForCarRepairs.API.Controllers
                 .OrderByDescending(c => c.CommentID)
                 .ToListAsync();
 
-            // Преобразуем для отправки на клиент
+            
             var result = comments.Select(c => new
             {
                 c.CommentID,
@@ -112,7 +112,7 @@ namespace RequestsForCarRepairs.API.Controllers
             return Ok(result);
         }
 
-        // POST: api/mechanic/comments/5
+     
         [HttpPost("comments/{requestId}")]
         public async Task<ActionResult<Comment>> AddComment(int requestId, [FromBody] AddCommentModel model)
         {
@@ -126,7 +126,7 @@ namespace RequestsForCarRepairs.API.Controllers
             _context.Comments.Add(comment);
             await _context.SaveChangesAsync();
 
-            // Загружаем данные мастера для ответа
+          
             await _context.Entry(comment)
                 .Reference(c => c.Master)
                 .LoadAsync();
@@ -143,7 +143,7 @@ namespace RequestsForCarRepairs.API.Controllers
             return Ok(result);
         }
 
-        // GET: api/mechanic/completed/5
+       
         [HttpGet("completed/{mechanicId}")]
         public async Task<ActionResult<IEnumerable<Request>>> GetCompletedRequests(int mechanicId)
         {
@@ -157,7 +157,7 @@ namespace RequestsForCarRepairs.API.Controllers
         }
     }
 
-    // Модели для запросов
+ 
     public class TakeRequestModel
     {
         public int MechanicId { get; set; }

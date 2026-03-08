@@ -5,7 +5,7 @@ let allComments = [];
 let currentRequestId = null;
 let currentParts = [];
 
-// Уведомления
+
 function showNotification(message, type = 'success') {
     const notification = document.createElement('div');
     notification.style.cssText = `
@@ -153,7 +153,7 @@ function displayRequests(requests, elementId, showActions) {
     }).join('');
 }
 
-// ==================== МОДАЛЬНОЕ ОКНО ====================
+
 
 async function openRequestDetail(requestId) {
     console.log('Открытие заявки', requestId);
@@ -173,21 +173,21 @@ async function openRequestDetail(requestId) {
 
     document.getElementById('detailStatus').value = request.requestStatus;
 
-    // Попытка загрузить комментарии
+ 
     try {
         await loadComments(requestId);
     } catch (error) {
         console.log('Комментарии не загружены, но окно должно открыться');
     }
 
-    // Попытка загрузить запчасти
+    
     try {
         await loadParts(requestId);
     } catch (error) {
         console.log('Запчасти не загружены');
     }
 
-    // Показываем первую вкладку (без передачи event)
+    
     showDetailTabManually('info');
 
     const modal = document.getElementById('requestDetailModal');
@@ -199,7 +199,7 @@ async function openRequestDetail(requestId) {
     }
 }
 
-// Новая функция для переключения вкладок без event
+
 function showDetailTabManually(tabName) {
     document.querySelectorAll('.detail-tab').forEach(t => t.style.display = 'none');
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -214,7 +214,7 @@ function showDetailTabManually(tabName) {
         loadParts(currentRequestId);
     }
 
-    // Активируем кнопку
+ 
     document.querySelectorAll('.tab-btn').forEach(btn => {
         if (btn.textContent.includes(tabName === 'info' ? 'Информация' :
             tabName === 'comments' ? 'Комментарии' : 'Запчасти')) {
@@ -223,16 +223,16 @@ function showDetailTabManually(tabName) {
     });
 }
 
-// Функция для клика по кнопкам вкладок
+
 function showDetailTab(tabName) {
     showDetailTabManually(tabName);
 }
 
-// ==================== КОММЕНТАРИИ ====================
+
 
 async function loadComments(requestId) {
     try {
-        // Пробуем загрузить комментарии через API
+        
         const comments = await apiGet(`/Comments/request/${requestId}`);
         const container = document.getElementById('commentsList');
 
@@ -282,7 +282,7 @@ async function addComment() {
     }
 }
 
-// ==================== ЗАПРОС ПОМОЩИ ====================
+
 
 async function requestHelp() {
     const problem = prompt('Опишите проблему, с которой нужна помощь:');
@@ -302,7 +302,7 @@ async function requestHelp() {
     }
 }
 
-// ==================== ЗАПЧАСТИ ====================
+
 
 async function loadParts(requestId) {
     const request = allRequests.find(r => r.requestID === requestId);
@@ -368,7 +368,6 @@ async function addPart() {
     }
 }
 
-// ==================== УПРАВЛЕНИЕ СТАТУСОМ ====================
 
 async function updateStatusFromCard(requestId) {
     const status = document.getElementById(`status-${requestId}`).value;
@@ -420,7 +419,7 @@ function logout() {
     app.logout();
 }
 
-// Глобальные функции
+
 window.showTab = showTab;
 window.takeRequest = takeRequest;
 window.updateStatusFromCard = updateStatusFromCard;

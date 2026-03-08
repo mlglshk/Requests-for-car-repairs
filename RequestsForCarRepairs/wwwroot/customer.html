@@ -17,14 +17,14 @@
             </div>
         </div>
 
-        <!-- Уведомления для клиента -->
+        
         <div class="alert-panel" id="notificationPanel" style="display: none;">
             <span class="alert-count" id="notificationCount">0</span>
             <span>новых уведомлений</span>
             <button onclick="showNotifications()">Просмотреть</button>
         </div>
 
-        <!-- Статистика клиента -->
+ 
         <div class="statistics-panel">
             <div class="stat-card">
                 <h3>Мои заявки</h3>
@@ -44,7 +44,7 @@
             </div>
         </div>
 
-        <!-- Навигация -->
+        
         <div class="nav">
             <button class="active" onclick="showTab('activeRequests')">Активные заявки</button>
             <button onclick="showTab('requestHistory')">История</button>
@@ -52,13 +52,12 @@
             <button onclick="showTab('feedback')">Оставить отзыв</button>
         </div>
 
-        <!-- Вкладка: Активные заявки -->
+        
         <div id="activeRequestsTab" class="tab active">
             <h2>Текущие заявки</h2>
             <div id="activeRequestsList">Загрузка...</div>
         </div>
 
-        <!-- Вкладка: История заявок -->
         <div id="requestHistoryTab" class="tab">
             <h2>История заявок</h2>
             <div class="filter-panel">
@@ -73,7 +72,7 @@
             <div id="historyRequestsList">Загрузка...</div>
         </div>
 
-        <!-- Вкладка: Новая заявка -->
+       
         <div id="newRequestTab" class="tab">
             <h2>Создание новой заявки</h2>
             <div class="request-card">
@@ -103,11 +102,11 @@
             </div>
         </div>
 
-        <!-- Вкладка: Оставить отзыв -->
+      
         <div id="feedbackTab" class="tab">
             <h2>Оценка качества обслуживания</h2>
 
-            <!-- Завершенные заявки для отзыва -->
+           
             <div id="completedForFeedback">Загрузка...</div>
 
           

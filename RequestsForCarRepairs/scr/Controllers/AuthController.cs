@@ -27,7 +27,7 @@ namespace RequestsForCarRepairs.API.Controllers
             {
                 _logger.LogInformation($"Попытка входа: {model?.Login}");
 
-                // Проверка модели
+                
                 if (model == null)
                 {
                     _logger.LogWarning("Модель логина пустая");
@@ -40,7 +40,6 @@ namespace RequestsForCarRepairs.API.Controllers
                     return BadRequest(new { error = "Логин и пароль обязательны" });
                 }
 
-                // Проверка сервиса
                 if (_userService == null)
                 {
                     _logger.LogError("UserService не инициализирован");
@@ -59,7 +58,7 @@ namespace RequestsForCarRepairs.API.Controllers
 
                 _logger.LogInformation($"Успешный вход: {user.Login}, роль: {user.Type}");
 
-                // Возвращаем данные пользователя без пароля
+                
                 var userData = new
                 {
                     user.UserID,
@@ -75,7 +74,7 @@ namespace RequestsForCarRepairs.API.Controllers
             {
                 _logger.LogError(ex, $"Ошибка при авторизации: {ex.Message}");
 
-                // Временно показываем детали ошибки для отладки
+                
                 if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development")
                 {
                     return StatusCode(500, new

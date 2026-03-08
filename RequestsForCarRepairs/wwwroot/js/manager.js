@@ -20,16 +20,16 @@ document.addEventListener('DOMContentLoaded', async function () {
 
 async function loadAllData() {
     try {
-        // Загружаем пользователей
+        
         allUsers = await apiGet('/ManagerData/users');
         console.log('Загружено пользователей:', allUsers.length);
 
-        // Загружаем заявки
+       
         allRequests = await apiGet('/ManagerData/requests');
         console.log('Загружено заявок:', allRequests.length);
-        console.log('Первая заявка:', allRequests[0]); // Для отладки
+        console.log('Первая заявка:', allRequests[0]); 
 
-        // Загружаем комментарии
+    
         try {
             allComments = await apiGet('/ManagerData/comments');
             console.log('Загружено комментариев:', allComments.length);
@@ -38,7 +38,7 @@ async function loadAllData() {
             allComments = [];
         }
 
-        // Обновляем интерфейс
+        
         updateStatistics();
         displayAllRequests();
         displayQRRequests();
@@ -56,7 +56,7 @@ function updateStatistics() {
     const inProgress = allRequests.filter(r => r.requestStatus === 'В процессе ремонта').length;
     const ready = allRequests.filter(r => r.requestStatus === 'Готова к выдаче').length;
 
-    // Просроченные (более 7 дней)
+    
     const now = new Date();
     const overdue = allRequests.filter(r => {
         if (r.requestStatus === 'Готова к выдаче' || r.requestStatus === 'Завершена') return false;
@@ -136,7 +136,7 @@ function checkHelpRequests() {
         return;
     }
 
-    // ПОКАЗЫВАЕМ ВСЕ КОММЕНТАРИИ
+    
     document.getElementById('helpCount').textContent = allComments.length;
     document.getElementById('helpAlert').style.display = 'flex';
 

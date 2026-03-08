@@ -17,12 +17,12 @@
             </div>
         </div>
 
-        <!-- Отладочная информация -->
+        
         <div style="margin-bottom: 10px; padding: 10px; background: #e8f0fe; border-radius: 5px;" id="debugInfo">
             Загрузка данных...
         </div>
 
-        <!-- Статистика -->
+        
         <div class="statistics-panel">
             <div class="stat-card">
                 <h3>Всего заявок</h3>
@@ -42,7 +42,6 @@
             </div>
         </div>
 
-        <!-- Панель поиска -->
         <div class="filter-panel">
             <input type="text" id="searchInput" placeholder="Поиск по номеру, клиенту, авто...">
             <select id="statusFilter">
@@ -58,13 +57,12 @@
             <button onclick="openCreateModal()" style="background: #4CAF50;">+ Новая заявка</button>
         </div>
 
-        <!-- Навигация -->
+
         <div class="nav">
             <button class="active" onclick="showTab('allRequests')">Все заявки</button>
             <button onclick="showTab('statistics')">Статистика</button>
         </div>
 
-        <!-- Вкладка: Все заявки -->
         <div id="allRequestsTab" class="tab active">
             <table class="request-table">
                 <thead>
@@ -85,7 +83,7 @@
             </table>
         </div>
 
-        <!-- Вкладка: Статистика -->
+        
         <div id="statisticsTab" class="tab">
             <h2>Статистика по типам неисправностей</h2>
             <table class="request-table">
@@ -103,7 +101,7 @@
         </div>
     </div>
 
-    <!-- Модальное окно создания/редактирования заявки -->
+   
     <div id="requestModal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeModal('requestModal')">&times;</span>

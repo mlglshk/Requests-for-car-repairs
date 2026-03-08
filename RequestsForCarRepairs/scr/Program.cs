@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 try
 {
-    // Эта строка решает проблему с датами
+    
     AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
 
     var builder = WebApplication.CreateBuilder(args);
@@ -34,7 +34,7 @@ try
     });
 
     string url = "https://localhost:10001";
-    Console.WriteLine($"🚀 Запуск на {url}");
+    Console.WriteLine($" Запуск на {url}");
 
     var serverTask = Task.Run(() => app.Run(url));
 
@@ -47,18 +47,18 @@ try
             FileName = url,
             UseShellExecute = true
         });
-        Console.WriteLine("✅ Браузер открыт автоматически");
+        Console.WriteLine("Браузер открыт автоматически");
     }
     catch (Exception ex)
     {
-        Console.WriteLine($"⚠️ Не удалось открыть браузер: {ex.Message}");
-        Console.WriteLine($"👉 Откройте вручную: {url}/authorization.html");
+        Console.WriteLine($"Не удалось открыть браузер: {ex.Message}");
+        Console.WriteLine($"Откройте вручную: {url}/authorization.html");
     }
 
     await serverTask;
 }
 catch (Exception ex)
 {
-    Console.WriteLine($"❌ Ошибка: {ex.Message}");
+    Console.WriteLine($"Ошибка: {ex.Message}");
     Console.ReadLine();
 }

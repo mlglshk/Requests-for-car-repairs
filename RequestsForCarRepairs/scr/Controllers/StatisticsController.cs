@@ -15,7 +15,7 @@ namespace RequestsForCarRepairs.API.Controllers
             _context = context;
         }
 
-        // GET: api/Statistics
+        
         [HttpGet]
         public async Task<ActionResult<object>> GetGeneralStatistics()
         {
@@ -25,7 +25,7 @@ namespace RequestsForCarRepairs.API.Controllers
             var inProgress = requests.Count(r => r.RequestStatus.ToLower() == "в работе" || r.RequestStatus.ToLower() == "ожидание");
             var completed = requests.Count(r => r.RequestStatus.ToLower() == "завершена");
 
-            // Среднее время ремонта
+            
             double avgTime = 0;
             var completedRequests = requests.Where(r => r.RequestStatus.ToLower() == "завершена" && r.CompletionDate != null);
             if (completedRequests.Any())
@@ -43,7 +43,7 @@ namespace RequestsForCarRepairs.API.Controllers
             };
         }
 
-        // GET: api/Statistics/problems
+      
         [HttpGet("problems")]
         public async Task<ActionResult<object>> GetProblemStatistics()
         {
@@ -63,7 +63,7 @@ namespace RequestsForCarRepairs.API.Controllers
             return Ok(problemGroups);
         }
 
-        // GET: api/Statistics/master/5
+      
         [HttpGet("master/{masterId}")]
         public async Task<ActionResult<object>> GetMasterStatistics(int masterId)
         {

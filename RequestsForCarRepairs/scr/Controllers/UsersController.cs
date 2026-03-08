@@ -16,7 +16,7 @@ namespace RequestsForCarRepairs.API.Controllers
             _context = context;
         }
 
-        // GET: api/Users
+        
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
@@ -30,7 +30,7 @@ namespace RequestsForCarRepairs.API.Controllers
             }
         }
 
-        // GET: api/Users/5
+        
         [HttpGet("{id}")]
         public async Task<ActionResult<User>> GetUser(int id)
         {
@@ -51,7 +51,7 @@ namespace RequestsForCarRepairs.API.Controllers
             }
         }
 
-        // GET: api/Users/type/Автомеханик
+        
         [HttpGet("type/{type}")]
         public async Task<ActionResult<IEnumerable<User>>> GetUsersByType(string type)
         {
@@ -67,7 +67,7 @@ namespace RequestsForCarRepairs.API.Controllers
             }
         }
 
-        // POST: api/Users/login
+        
         [HttpPost("login")]
         public async Task<ActionResult<User>> Login([FromBody] LoginRequest loginReq)
         {
@@ -89,7 +89,7 @@ namespace RequestsForCarRepairs.API.Controllers
             }
         }
 
-        // POST: api/Users
+      
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
@@ -106,7 +106,7 @@ namespace RequestsForCarRepairs.API.Controllers
             }
         }
 
-        // PUT: api/Users/5
+        
         [HttpPut("{id}")]
         public async Task<IActionResult> PutUser(int id, User user)
         {
@@ -138,7 +138,7 @@ namespace RequestsForCarRepairs.API.Controllers
             }
         }
 
-        // DELETE: api/Users/5
+        
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {

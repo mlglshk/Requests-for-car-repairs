@@ -16,7 +16,7 @@ namespace RequestsForCarRepairs.API.Controllers
             _context = context;
         }
 
-        // GET: api/Comments
+       
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Comment>>> GetComments()
         {
@@ -26,7 +26,7 @@ namespace RequestsForCarRepairs.API.Controllers
                 .ToListAsync();
         }
 
-        // GET: api/Comments/5
+      
         [HttpGet("{id}")]
         public async Task<ActionResult<Comment>> GetComment(int id)
         {
@@ -43,7 +43,7 @@ namespace RequestsForCarRepairs.API.Controllers
             return comment;
         }
 
-        // GET: api/Comments/request/5
+        
         [HttpGet("request/{requestId}")]
         public async Task<ActionResult<IEnumerable<Comment>>> GetCommentsByRequest(int requestId)
         {
@@ -54,7 +54,7 @@ namespace RequestsForCarRepairs.API.Controllers
                 .ToListAsync();
         }
 
-        // GET: api/Comments/master/5
+
         [HttpGet("master/{masterId}")]
         public async Task<ActionResult<IEnumerable<Comment>>> GetCommentsByMaster(int masterId)
         {
@@ -64,7 +64,6 @@ namespace RequestsForCarRepairs.API.Controllers
                 .ToListAsync();
         }
 
-        // POST: api/Comments
         [HttpPost]
         public async Task<ActionResult<Comment>> PostComment(Comment comment)
         {
@@ -74,7 +73,7 @@ namespace RequestsForCarRepairs.API.Controllers
             return CreatedAtAction(nameof(GetComment), new { id = comment.CommentID }, comment);
         }
 
-        // POST: api/Comments/request/5
+ 
         [HttpPost("request/{requestId}")]
         public async Task<ActionResult<Comment>> AddCommentToRequest(int requestId, [FromBody] AddCommentRequest request)
         {
@@ -91,7 +90,7 @@ namespace RequestsForCarRepairs.API.Controllers
             return CreatedAtAction(nameof(GetComment), new { id = comment.CommentID }, comment);
         }
 
-        // PUT: api/Comments/5
+   
         [HttpPut("{id}")]
         public async Task<IActionResult> PutComment(int id, Comment comment)
         {
@@ -121,7 +120,7 @@ namespace RequestsForCarRepairs.API.Controllers
             return NoContent();
         }
 
-        // DELETE: api/Comments/5
+      
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteComment(int id)
         {
@@ -143,8 +142,6 @@ namespace RequestsForCarRepairs.API.Controllers
         }
     }
 
-    // Модель для добавления комментария - вынесена за пределы класса контроллера
-    // и названа по-другому, чтобы избежать конфликта имен
     public class AddCommentRequest
     {
         public int MasterID { get; set; }

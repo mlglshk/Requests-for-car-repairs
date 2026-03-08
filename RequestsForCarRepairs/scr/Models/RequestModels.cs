@@ -1,4 +1,4 @@
-﻿// Models/RequestModels.cs
+﻿
 namespace RequestsForCarRepairs.API.Models
 {
     public class LoginRequest
@@ -41,7 +41,6 @@ namespace RequestsForCarRepairs.API.Models
         public string Comment { get; set; } = string.Empty;
     }
 
-    // ⚠️ ДОБАВЬТЕ ЭТО:
     public class CreateRequestModel
     {
         public string CarType { get; set; } = string.Empty;

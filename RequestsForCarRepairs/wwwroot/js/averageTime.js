@@ -1,17 +1,14 @@
-﻿/**
- * Расчет среднего времени ремонта по блок-схеме
- * Учитывает статус "Готова к выдаче" как завершенные заявки
- */
+﻿
 function calculateAverageRepairTime() {
-    console.log('=== НАЧАЛО АЛГОРИТМА ===');
+    console.log('НАЧАЛО АЛГОРИТМА');
 
-    // Получение всех заявок
+
     const requests = allRequests;
 
     if (!requests || requests.length === 0) {
         const message = 'Нет данных для расчета';
         console.log(message);
-        alert(message); // Временно используем alert вместо showNotification
+        alert(message); 
         return message;
     }
 
@@ -27,11 +24,11 @@ function calculateAverageRepairTime() {
         console.log(`  Статус: "${request.requestStatus}"`);
         console.log(`  Дата завершения: ${request.completionDate || 'нет'}`);
 
-        // Проверяем статус "Готова к выдаче" как завершенный
+        
         if ((request.requestStatus === 'Готова к выдаче' || request.requestStatus === 'Завершена')
             && request.completionDate) {
 
-            console.log('  ✅ Заявка завершена');
+            console.log('Заявка завершена');
 
             const start = new Date(request.startDate);
             const finish = new Date(request.completionDate);
@@ -48,7 +45,7 @@ function calculateAverageRepairTime() {
         }
     }
 
-    console.log('\n=== РЕЗУЛЬТАТ ===');
+    console.log('\nРЕЗУЛЬТАТ');
     console.log(`Всего завершенных: ${quantityFinish}`);
 
     if (quantityFinish === 0) {
@@ -56,7 +53,6 @@ function calculateAverageRepairTime() {
         console.log(message);
         alert(message);
 
-        // Обновляем UI
         const resultEl = document.getElementById('averageTimeResult');
         if (resultEl) resultEl.innerHTML = message;
 
@@ -78,7 +74,7 @@ function calculateAverageRepairTime() {
     const result = `Среднее время ремонта: ${avgHours.toFixed(1)} часов (${avgDays} дн.)`;
     console.log(result);
 
-    // Обновляем UI
+
     const resultEl = document.getElementById('averageTimeResult');
     if (resultEl) resultEl.innerHTML = result;
 
@@ -97,5 +93,5 @@ function calculateAverageRepairTime() {
     return result;
 }
 
-// Делаем функцию глобальной
+
 window.calculateAverageRepairTime = calculateAverageRepairTime;

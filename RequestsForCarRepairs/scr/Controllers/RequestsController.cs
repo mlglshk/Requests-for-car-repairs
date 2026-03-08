@@ -16,13 +16,13 @@ namespace RequestsForCarRepairs.API.Controllers
             _context = context;
         }
 
-        // GET: api/Requests
+        
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<object>>> GetRequests() // ИЗМЕНЕНО: возвращаем object вместо Request
+        public async Task<ActionResult<IEnumerable<object>>> GetRequests() 
         {
             try
             {
-                // ИЗМЕНЕНО: выбираем только нужные поля, без навигационных свойств
+                
                 var requests = await _context.Requests
                     .Select(r => new
                     {
@@ -47,9 +47,9 @@ namespace RequestsForCarRepairs.API.Controllers
             }
         }
 
-        // GET: api/Requests/5
+        
         [HttpGet("{id}")]
-        public async Task<ActionResult<object>> GetRequest(int id) // ИЗМЕНЕНО: возвращаем object
+        public async Task<ActionResult<object>> GetRequest(int id) 
         {
             try
             {
@@ -83,7 +83,7 @@ namespace RequestsForCarRepairs.API.Controllers
             }
         }
 
-        // PUT: api/Requests/5 - полное обновление
+        
         [HttpPut("{id}")]
         public async Task<IActionResult> PutRequest(int id, Request request)
         {
@@ -104,7 +104,7 @@ namespace RequestsForCarRepairs.API.Controllers
             }
         }
 
-        // POST: api/Requests/5 - частичное обновление (для совместимости)
+        
         [HttpPost("{id}")]
         public async Task<IActionResult> UpdateRequest(int id, [FromBody] UpdateRequestModel model)
         {
@@ -132,7 +132,7 @@ namespace RequestsForCarRepairs.API.Controllers
             }
         }
 
-        // POST: api/Requests - создание новой заявки
+        
         [HttpPost]
         public async Task<ActionResult<Request>> PostRequest([FromBody] CreateRequestModel model)
         {
@@ -154,7 +154,7 @@ namespace RequestsForCarRepairs.API.Controllers
                 _context.Requests.Add(request);
                 await _context.SaveChangesAsync();
 
-                // ИЗМЕНЕНО: возвращаем созданный объект
+               
                 return CreatedAtAction(nameof(GetRequest), new { id = request.RequestID }, request);
             }
             catch (Exception ex)
@@ -163,7 +163,7 @@ namespace RequestsForCarRepairs.API.Controllers
             }
         }
 
-        // DELETE: api/Requests/5
+        
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRequest(int id)
         {
@@ -186,7 +186,7 @@ namespace RequestsForCarRepairs.API.Controllers
             }
         }
 
-        // Модели
+      
         public class UpdateRequestModel
         {
             public int? MasterId { get; set; }

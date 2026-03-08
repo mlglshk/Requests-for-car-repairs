@@ -1,24 +1,66 @@
 ﻿let currentUser = null;
+let allUsers = [];
 let clientRequests = [];
 let notifications = [];
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
     currentUser = app.getUser();
-    if (!currentUser || (currentUser.type?.toLowerCase() !== 'клиент' && currentUser.type?.toLowerCase() !== 'admin')) {
-        // Для демо создаем тестового клиента
-        currentUser = {
-            userID: 1,
-            fio: 'Иванов Иван Иванович',
-            login: 'client',
-            type: 'клиент'
-        };
-        app.setUser(currentUser);
+    if (!currentUser) {
+        window.location.href = 'authorization.html';
+        return;
+    }
+
+    if (currentUser.type !== 'Заказчик') {
+        alert(`Доступ запрещен. Ваша роль: ${currentUser.type}`);
+        window.location.href = 'authorization.html';
+        return;
     }
 
     document.getElementById('userName').textContent = currentUser.fio || currentUser.login;
 
-    loadClientData();
+    await loadUsers();
+    await loadClientRequests();
 });
+
+async function loadUsers() {
+    try {
+        allUsers = await apiGet('/Users');
+        console.log('Загружено пользователей:', allUsers.length);
+    } catch (error) {
+        console.error('Ошибка загрузки пользователей:', error);
+    }
+}
+
+function getUserName(userId) {
+    if (!userId) return 'Не назначен';
+    const user = allUsers.find(u => u.userID === userId);
+    return user ? user.fio : `ID: ${userId}`;
+}
+
+async function loadClientRequests() {
+    try {
+        const allRequests = await apiGet('/Requests');
+        clientRequests = allRequests.filter(r => r.clientID === currentUser.userID);
+
+        console.log('Загружено заявок клиента:', clientRequests.length);
+
+        updateStatistics();
+        loadActiveRequests();
+        loadRequestHistory();
+        loadCompletedForFeedback();
+
+   
+    } catch (error) {
+        console.error('Ошибка загрузки заявок:', error);
+        document.getElementById('activeRequestsList').innerHTML = '<p>Ошибка загрузки</p>';
+    }
+}
+
+async function loadNotifications() {
+  
+    notifications = [];
+    showNotificationsAlert();
+}
 
 function showTab(tabName) {
     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
@@ -26,87 +68,15 @@ function showTab(tabName) {
 
     document.getElementById(tabName + 'Tab').classList.add('active');
     event.target.classList.add('active');
-
-    if (tabName === 'activeRequests') loadActiveRequests();
-    if (tabName === 'requestHistory') loadRequestHistory();
-    if (tabName === 'feedback') loadCompletedForFeedback();
-}
-
-function loadClientData() {
-    // Имитация загрузки данных клиента
-    setTimeout(() => {
-        clientRequests = [
-            {
-                requestID: 101,
-                startDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000),
-                carType: 'Легковой',
-                carModel: 'Toyota Camry',
-                problemDescription: 'Не заводится двигатель, странный звук при попытке запуска',
-                requestStatus: 'в работе',
-                completionDate: null,
-                master: { fio: 'Петров П.П.' },
-                comments: [
-                    { authorName: 'Петров П.П.', message: 'Диагностика показала проблемы со стартером', createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000) },
-                    { authorName: 'Петров П.П.', message: 'Заказан новый стартер, ожидаем поставку', createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000) }
-                ],
-                parts: [
-                    { name: 'Стартер', partNumber: 'ST-123', quantity: 1, isOrdered: true }
-                ]
-            },
-            {
-                requestID: 102,
-                startDate: new Date(Date.now() - 10 * 24 * 60 * 60 * 1000),
-                carType: 'Легковой',
-                carModel: 'KIA Rio',
-                problemDescription: 'Плавающие обороты, дергается при разгоне',
-                requestStatus: 'готова',
-                completionDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
-                master: { fio: 'Сидоров С.С.' },
-                comments: [
-                    { authorName: 'Сидоров С.С.', message: 'Произведена чистка дроссельной заслонки', createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000) },
-                    { authorName: 'Сидоров С.С.', message: 'Замена свечей зажигания', createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000) }
-                ],
-                parts: [
-                    { name: 'Свечи зажигания', partNumber: 'NGK-456', quantity: 4, isOrdered: true }
-                ]
-            },
-            {
-                requestID: 103,
-                startDate: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000),
-                carType: 'Грузовой',
-                carModel: 'ГАЗель',
-                problemDescription: 'Стук в подвеске спереди',
-                requestStatus: 'завершена',
-                completionDate: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
-                master: { fio: 'Кузнецов К.К.' },
-                comments: [
-                    { authorName: 'Кузнецов К.К.', message: 'Замена передних амортизаторов', createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000) },
-                    { authorName: 'Кузнецов К.К.', message: 'Сход-развал выполнен', createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000) }
-                ],
-                parts: [
-                    { name: 'Амортизаторы', partNumber: 'KYB-789', quantity: 2, isOrdered: true }
-                ]
-            }
-        ];
-
-        // Уведомления
-        notifications = [
-            { id: 1, message: 'По заявке №101 обновлен статус: "В работе"', date: new Date(), read: false },
-            { id: 2, message: 'Заявка №102 готова к выдаче', date: new Date(), read: false },
-            { id: 3, message: 'Добавлен комментарий по заявке №101', date: new Date(), read: true }
-        ];
-
-        updateStatistics();
-        showNotificationsAlert();
-        loadActiveRequests();
-    }, 500);
 }
 
 function updateStatistics() {
     const total = clientRequests.length;
-    const inProgress = clientRequests.filter(r => r.requestStatus === 'в работе' || r.requestStatus === 'ожидание').length;
-    const completed = clientRequests.filter(r => r.requestStatus === 'завершена').length;
-    const ready = clientRequests.filter(r => r.requestStatus === 'готова').length;
+    const inProgress = clientRequests.filter(r =>
+        r.requestStatus === 'В процессе ремонта' || r.requestStatus === 'Ожидание автозапчастей'
+    ).length;
+    const completed = clientRequests.filter(r => r.requestStatus === 'Завершена').length;
+    const ready = clientRequests.filter(r => r.requestStatus === 'Готова к выдаче').length;
 
     document.getElementById('totalClientRequests').textContent = total;
     document.getElementById('clientInProgress').textContent = inProgress;
@@ -115,45 +85,52 @@ function updateStatistics() {
 }
 
 function showNotificationsAlert() {
-    const unreadCount = notifications.filter(n => !n.read).length;
-    if (unreadCount > 0) {
-        document.getElementById('notificationCount').textContent = unreadCount;
-        document.getElementById('notificationPanel').style.display = 'flex';
-    }
+    
+    document.getElementById('notificationPanel').style.display = 'none';
 }
 
 function loadActiveRequests() {
-    const active = clientRequests.filter(r => r.requestStatus !== 'завершена');
-    displayClientRequests(active, 'activeRequestsList', true);
+    const active = clientRequests.filter(r =>
+        r.requestStatus !== 'Завершена' && r.requestStatus !== 'Готова к выдаче'
+    );
+    displayRequests(active, 'activeRequestsList');
 }
 
 function loadRequestHistory() {
-    const history = clientRequests.filter(r => r.requestStatus === 'завершена');
-    displayClientRequests(history, 'historyRequestsList', false);
+    const history = clientRequests.filter(r =>
+        r.requestStatus === 'Завершена' || r.requestStatus === 'Готова к выдаче'
+    );
+    displayRequests(history, 'historyRequestsList');
 }
 
 function loadCompletedForFeedback() {
-    const completed = clientRequests.filter(r => r.requestStatus === 'завершена' || r.requestStatus === 'готова');
+    const completed = clientRequests.filter(r =>
+        r.requestStatus === 'Завершена' || r.requestStatus === 'Готова к выдаче'
+    );
 
+    const container = document.getElementById('completedForFeedback');
     if (completed.length === 0) {
-        document.getElementById('completedForFeedback').innerHTML = '<p>Нет завершенных заявок для отзыва</p>';
+        container.innerHTML = '<p>Нет завершенных заявок для отзыва</p>';
         return;
     }
 
-    document.getElementById('completedForFeedback').innerHTML = completed.map(r => `
-                    <div class="request-card">
-                        <h3>Заявка №${r.requestID}</h3>
-                        <p><strong>Автомобиль:</strong> ${r.carType} ${r.carModel}</p>
-                        <p><strong>Проблема:</strong> ${r.problemDescription}</p>
-                        <p><strong>Статус:</strong> <span class="status">${r.requestStatus}</span></p>
-                        <p><strong>Механик:</strong> ${r.master?.fio || 'Не указан'}</p>
-                        <p><strong>Дата завершения:</strong> ${r.completionDate ? new Date(r.completionDate).toLocaleDateString() : 'Не указана'}</p>
-                        <button onclick="showFeedbackForm(${r.requestID})">Оставить отзыв</button>
-                    </div>
-                `).join('');
+    container.innerHTML = completed.map(r => {
+        const master = allUsers.find(u => u.userID === r.masterID);
+        return `
+            <div class="request-card">
+                <h3>Заявка №${r.requestID}</h3>
+                <p><strong>Автомобиль:</strong> ${r.carType} ${r.carModel}</p>
+                <p><strong>Проблема:</strong> ${r.problemDescription}</p>
+                <p><strong>Статус:</strong> <span class="status">${r.requestStatus}</span></p>
+                <p><strong>Механик:</strong> ${master?.fio || 'Не указан'}</p>
+                <p><strong>Дата завершения:</strong> ${r.completionDate ? new Date(r.completionDate).toLocaleDateString() : 'Не указана'}</p>
+                <button onclick="showFeedbackForm(${r.requestID})">Оставить отзыв</button>
+            </div>
+        `;
+    }).join('');
 }
 
-function displayClientRequests(requests, elementId, showTimeline) {
+function displayRequests(requests, elementId) {
     const container = document.getElementById(elementId);
 
     if (!requests || requests.length === 0) {
@@ -163,87 +140,94 @@ function displayClientRequests(requests, elementId, showTimeline) {
 
     container.innerHTML = requests.map(r => {
         const statusClass = {
-            'новая': 'status-new',
-            'в работе': 'status-progress',
-            'ожидание': 'status-waiting',
-            'готова': 'status-ready',
-            'завершена': 'status-completed'
-        }[r.requestStatus?.toLowerCase()] || '';
+            'Новая заявка': 'status-new',
+            'В процессе ремонта': 'status-progress',
+            'Ожидание автозапчастей': 'status-waiting',
+            'Готова к выдаче': 'status-ready',
+            'Завершена': 'status-completed'
+        }[r.requestStatus] || '';
+
+        const master = allUsers.find(u => u.userID === r.masterID);
 
         return `
-                        <div class="request-card">
-                            <h3>Заявка №${r.requestID}</h3>
-                            <p><strong>Дата создания:</strong> ${new Date(r.startDate).toLocaleString()}</p>
-                            <p><strong>Автомобиль:</strong> ${r.carType || ''} ${r.carModel || ''}</p>
-                            <p><strong>Проблема:</strong> ${r.problemDescription || ''}</p>
-                            <p><strong>Статус:</strong> <span class="status ${statusClass}">${r.requestStatus}</span></p>
-                            <p><strong>Механик:</strong> ${r.master?.fio || 'Не назначен'}</p>
-                            ${r.completionDate ? `<p><strong>Дата завершения:</strong> ${new Date(r.completionDate).toLocaleDateString()}</p>` : ''}
-                            <button onclick="showRequestDetails(${r.requestID})">Подробнее</button>
+            <div class="request-card">
+                <h3>Заявка №${r.requestID}</h3>
+                <p><strong>Дата создания:</strong> ${new Date(r.startDate).toLocaleDateString()}</p>
+                <p><strong>Автомобиль:</strong> ${r.carType || ''} ${r.carModel || ''}</p>
+                <p><strong>Проблема:</strong> ${r.problemDescription || ''}</p>
+                <p><strong>Статус:</strong> <span class="status ${statusClass}">${r.requestStatus}</span></p>
+                <p><strong>Механик:</strong> ${master?.fio || 'Не назначен'}</p>
+                ${r.completionDate ? `<p><strong>Дата завершения:</strong> ${new Date(r.completionDate).toLocaleDateString()}</p>` : ''}
+                <button onclick="showRequestDetails(${r.requestID})">Подробнее</button>
 
-                            ${r.requestStatus === 'готова' ? `
-                                <button onclick="confirmPickup(${r.requestID})" style="background: #4CAF50;">✅ Забрать авто</button>
-                            ` : ''}
-                        </div>
-                    `;
+                ${r.requestStatus === 'Готова к выдаче' ? `
+                    <button onclick="confirmPickup(${r.requestID})" style="background: #4CAF50;">✅ Забрать авто</button>
+                ` : ''}
+            </div>
+        `;
     }).join('');
 }
 
-function showRequestDetails(requestId) {
+async function showRequestDetails(requestId) {
     const request = clientRequests.find(r => r.requestID === requestId);
     if (!request) return;
 
-    document.getElementById('detailModalTitle').textContent = `Заявка №${requestId}`;
+    try {
+    
+        let comments = [];
+        try {
+            comments = await apiGet(`/Comments/request/${requestId}`);
+        } catch (error) {
+            console.log('Комментарии не загружены');
+        }
 
+        const master = allUsers.find(u => u.userID === request.masterID);
 
-    document.getElementById('requestDetailInfo').innerHTML = `
-                    <p><strong>Автомобиль:</strong> ${request.carType} ${request.carModel}</p>
-                    <p><strong>Проблема:</strong> ${request.problemDescription}</p>
-                    <p><strong>Статус:</strong> ${request.requestStatus}</p>
-                    <p><strong>Механик:</strong> ${request.master?.fio || 'Не назначен'}</p>
-                    <p><strong>Дата создания:</strong> ${new Date(request.startDate).toLocaleString()}</p>
-                    ${request.completionDate ? `<p><strong>Дата завершения:</strong> ${new Date(request.completionDate).toLocaleString()}</p>` : ''}
-                `;
+        document.getElementById('detailModalTitle').textContent = `Заявка №${requestId}`;
+        document.getElementById('requestDetailInfo').innerHTML = `
+            <p><strong>Автомобиль:</strong> ${request.carType} ${request.carModel}</p>
+            <p><strong>Проблема:</strong> ${request.problemDescription}</p>
+            <p><strong>Статус:</strong> ${request.requestStatus}</p>
+            <p><strong>Механик:</strong> ${master?.fio || 'Не назначен'}</p>
+        `;
 
+        document.getElementById('statusTimeline').innerHTML = `
+            <div style="padding:10px; background:#f5f5f5; border-radius:5px;">
+                <p>✅ Создана: ${new Date(request.startDate).toLocaleString()}</p>
+                ${request.completionDate ? `<p>✅ Завершена: ${new Date(request.completionDate).toLocaleString()}</p>` : ''}
+            </div>
+        `;
 
-    document.getElementById('statusTimeline').innerHTML = `
-                    <div style="margin: 10px 0; padding: 10px; background: #f5f5f5; border-radius: 5px;">
-                        <p>✅ Заявка создана: ${new Date(request.startDate).toLocaleString()}</p>
-                        ${request.requestStatus !== 'новая' ? '<p>🔄 В работе</p>' : ''}
-                        ${request.completionDate ? `<p>✅ Завершена: ${new Date(request.completionDate).toLocaleString()}</p>` : ''}
+        if (comments.length > 0) {
+            document.getElementById('detailComments').innerHTML = comments.map(c => {
+                const author = allUsers.find(u => u.userID === c.masterID);
+                return `
+                    <div class="comment">
+                        <strong>${author?.fio || 'Механик'}:</strong> ${c.message}
+                        <br><small>${new Date(c.createdAt).toLocaleString()}</small>
                     </div>
                 `;
+            }).join('');
+        } else {
+            document.getElementById('detailComments').innerHTML = '<p>Комментариев пока нет</p>';
+        }
 
+        if (request.repairParts) {
+            document.getElementById('detailParts').innerHTML = `<p>${request.repairParts}</p>`;
+        } else {
+            document.getElementById('detailParts').innerHTML = '<p>Запчасти не заказывались</p>';
+        }
 
-    if (request.comments && request.comments.length > 0) {
-        document.getElementById('detailComments').innerHTML = request.comments.map(c => `
-                        <div class="comment">
-                            <strong>${c.authorName}:</strong> ${c.message}
-                            <br><small>${new Date(c.createdAt).toLocaleString()}</small>
-                        </div>
-                    `).join('');
-    } else {
-        document.getElementById('detailComments').innerHTML = '<p>Комментариев пока нет</p>';
+        document.getElementById('requestDetailModal').style.display = 'block';
+
+    } catch (error) {
+        console.error('Ошибка загрузки деталей:', error);
     }
-
-    if (request.parts && request.parts.length > 0) {
-        document.getElementById('detailParts').innerHTML = request.parts.map(p => `
-                        <div class="comment">
-                            <strong>${p.name}</strong> (${p.partNumber}) - ${p.quantity} шт.
-                            ${p.isOrdered ? '✅ Заказано' : '⏳ Ожидает заказа'}
-                        </div>
-                    `).join('');
-    } else {
-        document.getElementById('detailParts').innerHTML = '<p>Запчасти не заказывались</p>';
-    }
-
-    document.getElementById('requestDetailModal').style.display = 'block';
 }
 
 function showFeedbackForm(requestId) {
     document.getElementById('feedbackRequestId').textContent = requestId;
     document.getElementById('feedbackForm').style.display = 'block';
-    document.getElementById('feedbackTab').scrollTop = document.getElementById('feedbackForm').offsetTop;
 }
 
 function submitFeedback() {
@@ -259,19 +243,7 @@ function submitFeedback() {
         return;
     }
 
-    alert(`
-                    Спасибо за ваш отзыв по заявке №${requestId}!
-
-                    Оценка: ${rating}
-                    Качество ремонта: ${qualityRating}
-                    Скорость: ${speedRating}
-                    Рекомендация: ${recommend === 'yes' ? '✅ Да' : '❌ Нет'}
-
-                    Ваш отзыв: "${feedbackText}"
-
-                    Мы ценим ваше мнение!
-                `);
-
+    alert(`Спасибо за отзыв по заявке №${requestId}!`);
     cancelFeedback();
 }
 
@@ -284,68 +256,60 @@ function cancelFeedback() {
     document.getElementById('recommend').value = 'yes';
 }
 
-function createRequest() {
+async function createRequest() {
     const carType = document.getElementById('carType').value;
     const carModel = document.getElementById('carModel').value;
     const problem = document.getElementById('problemDescription').value;
-    const desiredDate = document.getElementById('desiredDate').value;
-    const wishes = document.getElementById('additionalWishes').value;
 
     if (!carType || !carModel || !problem) {
         alert('Заполните все обязательные поля');
         return;
     }
 
-    const newId = Math.max(...clientRequests.map(r => r.requestID)) + 1;
+    try {
+        const newRequest = {
+            carType: carType,
+            carModel: carModel,
+            problemDescription: problem,
+            clientId: currentUser.userID,
+            requestStatus: 'Новая заявка'
+        };
 
-    const newRequest = {
-        requestID: newId,
-        startDate: new Date(),
-        carType: carType,
-        carModel: carModel,
-        problemDescription: problem,
-        requestStatus: 'новая',
-        completionDate: null,
-        master: null,
-        comments: [],
-        parts: []
-    };
+        await apiPost('/Requests', newRequest);
 
-    clientRequests.push(newRequest);
+        alert('✅ Заявка создана');
+        document.getElementById('newRequestForm').reset();
+        await loadClientRequests();
+        showTab('activeRequests');
 
-    alert(`Заявка №${newId} успешно создана! Ожидайте подтверждения от диспетчера.`);
-
-
-    document.getElementById('newRequestForm').reset();
-
-
-    showTab('activeRequests');
-    loadActiveRequests();
-    updateStatistics();
+    } catch (error) {
+        alert('❌ Ошибка: ' + error.message);
+    }
 }
 
-function confirmPickup(requestId) {
+async function confirmPickup(requestId) {
     if (confirm(`Подтвердите получение автомобиля по заявке №${requestId}`)) {
-        const request = clientRequests.find(r => r.requestID === requestId);
-        if (request) {
-            request.requestStatus = 'завершена';
-            request.completionDate = new Date();
-            alert('Спасибо за обращение! Будем рады видеть вас снова.');
-            loadActiveRequests();
-            loadRequestHistory();
-            updateStatistics();
+        try {
+            await apiPost(`/Requests/${requestId}`, {
+                status: 'Завершена'
+            });
+            alert('Спасибо за обращение!');
+            await loadClientRequests();
+        } catch (error) {
+            alert('Ошибка: ' + error.message);
         }
     }
 }
 
 function showNotifications() {
-    document.getElementById('notificationsList').innerHTML = notifications.map(n => `
-                    <div class="comment" style="${n.read ? 'opacity: 0.7;' : 'font-weight: bold;'}">
-                        <p>${n.message}</p>
-                        <small>${new Date(n.date).toLocaleString()}</small>
-                        ${!n.read ? `<button onclick="markAsRead(${n.id})" style="margin-top: 5px;">✓ Отметить прочитанным</button>` : ''}
-                    </div>
-                `).join('');
+    const list = document.getElementById('notificationsList');
+    list.innerHTML = notifications.map(n => `
+        <div class="comment" style="${n.read ? 'opacity:0.7' : 'font-weight:bold'}">
+            <p>${n.message}</p>
+            <small>${n.date.toLocaleString()}</small>
+            ${!n.read ? `<button onclick="markAsRead(${n.id})">✓ Отметить прочитанным</button>` : ''}
+        </div>
+    `).join('');
 
     document.getElementById('notificationsModal').style.display = 'block';
 }
@@ -367,21 +331,26 @@ function filterHistory() {
     const search = document.getElementById('historySearch').value.toLowerCase();
     const status = document.getElementById('historyStatusFilter').value;
 
-    let filtered = clientRequests.filter(r => r.requestStatus === 'завершена' || r.requestStatus === 'готова');
+    let filtered = clientRequests.filter(r =>
+        r.requestStatus === 'Завершена' || r.requestStatus === 'Готова к выдаче'
+    );
 
     if (search) {
         filtered = filtered.filter(r =>
             r.requestID.toString().includes(search) ||
-            r.carModel.toLowerCase().includes(search) ||
-            r.carType.toLowerCase().includes(search)
+            r.carModel?.toLowerCase().includes(search) ||
+            r.carType?.toLowerCase().includes(search)
         );
     }
 
     if (status) {
-        filtered = filtered.filter(r => r.requestStatus === status);
+        filtered = filtered.filter(r =>
+            (status === 'завершена' && r.requestStatus === 'Завершена') ||
+            (status === 'готова' && r.requestStatus === 'Готова к выдаче')
+        );
     }
 
-    displayClientRequests(filtered, 'historyRequestsList', false);
+    displayRequests(filtered, 'historyRequestsList');
 }
 
 function closeModal(modalId) {

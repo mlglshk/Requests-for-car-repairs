@@ -1,4 +1,4 @@
-﻿// js/auth.js
+﻿
 const app = {
     apiUrl: 'https://localhost:10001/api',
 

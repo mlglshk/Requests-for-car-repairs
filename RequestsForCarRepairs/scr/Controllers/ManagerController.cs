@@ -16,7 +16,7 @@ namespace RequestsForCarRepairs.API.Controllers
             _context = context;
         }
 
-        // GET: api/Manager/requests
+   
         [HttpGet("requests")]
         public async Task<ActionResult<IEnumerable<object>>> GetRequestsForManager()
         {
@@ -27,7 +27,7 @@ namespace RequestsForCarRepairs.API.Controllers
                     .Include(r => r.Master)
                     .ToListAsync();
 
-                // Создаем анонимные объекты без циклических ссылок
+                
                 var result = requests.Select(r => new
                 {
                     r.RequestID,
@@ -62,7 +62,7 @@ namespace RequestsForCarRepairs.API.Controllers
             }
         }
 
-        // GET: api/Manager/mechanics
+       
         [HttpGet("mechanics")]
         public async Task<ActionResult<IEnumerable<object>>> GetMechanics()
         {
@@ -86,7 +86,7 @@ namespace RequestsForCarRepairs.API.Controllers
             }
         }
 
-        // GET: api/Manager/statistics
+      
         [HttpGet("statistics")]
         public async Task<ActionResult<object>> GetStatistics()
         {
@@ -113,7 +113,7 @@ namespace RequestsForCarRepairs.API.Controllers
             }
         }
 
-        // GET: api/Manager/clients
+        
         [HttpGet("clients")]
         public async Task<ActionResult<IEnumerable<object>>> GetClients()
         {

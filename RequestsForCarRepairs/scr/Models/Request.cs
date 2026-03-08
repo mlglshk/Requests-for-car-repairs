@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RequestsForCarRepairs.API.Models  // Добавьте namespace
+namespace RequestsForCarRepairs.API.Models 
 {
     [Table("requests")]
     public class Request
