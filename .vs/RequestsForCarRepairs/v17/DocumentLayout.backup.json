@@ -3,12 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{45FC8454-F4D7-4D6B-91A5-9684B9B9B662}|RequestsForCarRepairs\\RequestsForCarRepairs.csproj|c:\\users\\user\\source\\repos\\requestsforcarrepairs\\requestsforcarrepairs\\wwwroot\\js\\mechanic.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{45FC8454-F4D7-4D6B-91A5-9684B9B9B662}|RequestsForCarRepairs\\RequestsForCarRepairs.csproj|solutionrelative:requestsforcarrepairs\\wwwroot\\js\\mechanic.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{45FC8454-F4D7-4D6B-91A5-9684B9B9B662}|RequestsForCarRepairs\\RequestsForCarRepairs.csproj|c:\\users\\user\\source\\repos\\requestsforcarrepairs\\requestsforcarrepairs\\wwwroot\\js\\averagetime.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{45FC8454-F4D7-4D6B-91A5-9684B9B9B662}|RequestsForCarRepairs\\RequestsForCarRepairs.csproj|solutionrelative:requestsforcarrepairs\\wwwroot\\js\\averagetime.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{45FC8454-F4D7-4D6B-91A5-9684B9B9B662}|RequestsForCarRepairs\\RequestsForCarRepairs.csproj|c:\\users\\user\\source\\repos\\requestsforcarrepairs\\requestsforcarrepairs\\wwwroot\\js\\manager.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{45FC8454-F4D7-4D6B-91A5-9684B9B9B662}|RequestsForCarRepairs\\RequestsForCarRepairs.csproj|solutionrelative:requestsforcarrepairs\\wwwroot\\js\\manager.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{45FC8454-F4D7-4D6B-91A5-9684B9B9B662}|RequestsForCarRepairs\\RequestsForCarRepairs.csproj|c:\\users\\user\\source\\repos\\requestsforcarrepairs\\requestsforcarrepairs\\wwwroot\\manager.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{45FC8454-F4D7-4D6B-91A5-9684B9B9B662}|RequestsForCarRepairs\\RequestsForCarRepairs.csproj|solutionrelative:requestsforcarrepairs\\wwwroot\\manager.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{45FC8454-F4D7-4D6B-91A5-9684B9B9B662}|RequestsForCarRepairs\\RequestsForCarRepairs.csproj|c:\\users\\user\\source\\repos\\requestsforcarrepairs\\requestsforcarrepairs\\schemes\\algorithmaveragetime.png||{177559E0-D141-11D0-92DF-00A0C9138C45}",
+      "RelativeMoniker": "D:0:0:{45FC8454-F4D7-4D6B-91A5-9684B9B9B662}|RequestsForCarRepairs\\RequestsForCarRepairs.csproj|solutionrelative:requestsforcarrepairs\\schemes\\algorithmaveragetime.png||{177559E0-D141-11D0-92DF-00A0C9138C45}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{45FC8454-F4D7-4D6B-91A5-9684B9B9B662}|RequestsForCarRepairs\\RequestsForCarRepairs.csproj|c:\\users\\user\\source\\repos\\requestsforcarrepairs\\requestsforcarrepairs\\wwwroot\\js\\mechanic.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{45FC8454-F4D7-4D6B-91A5-9684B9B9B662}|RequestsForCarRepairs\\RequestsForCarRepairs.csproj|solutionrelative:requestsforcarrepairs\\wwwroot\\js\\mechanic.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{45FC8454-F4D7-4D6B-91A5-9684B9B9B662}|RequestsForCarRepairs\\RequestsForCarRepairs.csproj|c:\\users\\user\\source\\repos\\requestsforcarrepairs\\requestsforcarrepairs\\wwwroot\\mechanic.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -33,10 +45,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{45FC8454-F4D7-4D6B-91A5-9684B9B9B662}|RequestsForCarRepairs\\RequestsForCarRepairs.csproj|c:\\users\\user\\source\\repos\\requestsforcarrepairs\\requestsforcarrepairs\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{45FC8454-F4D7-4D6B-91A5-9684B9B9B662}|RequestsForCarRepairs\\RequestsForCarRepairs.csproj|solutionrelative:requestsforcarrepairs\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{45FC8454-F4D7-4D6B-91A5-9684B9B9B662}|RequestsForCarRepairs\\RequestsForCarRepairs.csproj|c:\\users\\user\\source\\repos\\requestsforcarrepairs\\requestsforcarrepairs\\wwwroot\\manager.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{45FC8454-F4D7-4D6B-91A5-9684B9B9B662}|RequestsForCarRepairs\\RequestsForCarRepairs.csproj|solutionrelative:requestsforcarrepairs\\wwwroot\\manager.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{45FC8454-F4D7-4D6B-91A5-9684B9B9B662}|RequestsForCarRepairs\\RequestsForCarRepairs.csproj|c:\\users\\user\\source\\repos\\requestsforcarrepairs\\requestsforcarrepairs\\scr\\services\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -177,35 +185,6 @@
           "SelectedChildIndex": 7,
           "Children": [
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{e5c86464-96be-4d7c-9a8b-abcb3bbf5f92}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{34e76e81-ee4a-11d0-ae2e-00a0c90fffc3}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "mechanic.html",
-              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\wwwroot\\mechanic.html",
-              "RelativeDocumentMoniker": "RequestsForCarRepairs\\wwwroot\\mechanic.html",
-              "ToolTip": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\wwwroot\\mechanic.html",
-              "RelativeToolTip": "RequestsForCarRepairs\\wwwroot\\mechanic.html",
-              "ViewState": "AgIAAJcAAAAAAAAAAAAiwLIAAAAHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2026-03-04T08:49:41.247Z",
-              "EditorCaption": ""
-            },
-            {
               "$type": "Document",
               "DocumentIndex": 1,
               "Title": "manager.js",
@@ -213,40 +192,14 @@
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\wwwroot\\js\\manager.js",
               "ToolTip": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\wwwroot\\js\\manager.js",
               "RelativeToolTip": "RequestsForCarRepairs\\wwwroot\\js\\manager.js",
-              "ViewState": "AgIAAOgAAAAAAAAAAAAcwPAAAAAGAAAAAAAAAA==",
+              "ViewState": "AgIAAOQAAAAAAAAAAAAUwA8BAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
               "WhenOpened": "2026-03-08T11:32:39.296Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "style.css",
-              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\wwwroot\\css\\style.css",
-              "RelativeDocumentMoniker": "RequestsForCarRepairs\\wwwroot\\css\\style.css",
-              "ToolTip": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\wwwroot\\css\\style.css",
-              "RelativeToolTip": "RequestsForCarRepairs\\wwwroot\\css\\style.css",
-              "ViewState": "AgIAAN4BAAAAAAAAAAAiwPkBAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2026-03-02T18:33:32.891Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "mechanic.js",
-              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\wwwroot\\js\\mechanic.js",
-              "RelativeDocumentMoniker": "RequestsForCarRepairs\\wwwroot\\js\\mechanic.js",
-              "ToolTip": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\wwwroot\\js\\mechanic.js*",
-              "RelativeToolTip": "RequestsForCarRepairs\\wwwroot\\js\\mechanic.js*",
-              "ViewState": "AgIAAKIBAAAAAAAAAAAzwLEBAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2026-03-08T11:31:27.853Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 16,
               "Title": "IRequestService.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\scr\\Services\\IRequestService.cs",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\scr\\Services\\IRequestService.cs",
@@ -258,7 +211,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 12,
               "Title": "customer.html",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\wwwroot\\customer.html",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\wwwroot\\customer.html",
@@ -266,12 +219,11 @@
               "RelativeToolTip": "RequestsForCarRepairs\\wwwroot\\customer.html",
               "ViewState": "AgIAAMIAAAAAAAAAAAAAAMkAAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2026-03-02T18:37:06.597Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-02T18:37:06.597Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 9,
               "Title": "dispatcher.html",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\wwwroot\\dispatcher.html",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\wwwroot\\dispatcher.html",
@@ -279,12 +231,11 @@
               "RelativeToolTip": "RequestsForCarRepairs\\wwwroot\\dispatcher.html",
               "ViewState": "AgIAAHgAAAAAAAAAAAAAAJsAAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2026-03-05T10:00:19.737Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-05T10:00:19.737Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 7,
               "Title": "dispatcher.js",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\wwwroot\\js\\dispatcher.js",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\wwwroot\\js\\dispatcher.js",
@@ -292,12 +243,11 @@
               "RelativeToolTip": "RequestsForCarRepairs\\wwwroot\\js\\dispatcher.js",
               "ViewState": "AgIAAJ0BAAAAAAAAAAAcwLABAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2026-03-08T11:35:19.457Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-08T11:35:19.457Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 10,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\appsettings.json",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\appsettings.json",
@@ -305,12 +255,86 @@
               "RelativeToolTip": "RequestsForCarRepairs\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAABwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2026-03-04T09:01:45.191Z",
+              "WhenOpened": "2026-03-04T09:01:45.191Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "manager.html",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\wwwroot\\manager.html",
+              "RelativeDocumentMoniker": "RequestsForCarRepairs\\wwwroot\\manager.html",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\wwwroot\\manager.html",
+              "RelativeToolTip": "RequestsForCarRepairs\\wwwroot\\manager.html",
+              "ViewState": "AgIAANcAAAAAAAAAAAAYwAcBAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2026-03-04T08:28:49.295Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 0,
+              "Title": "averageTime.js",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\wwwroot\\js\\averageTime.js",
+              "RelativeDocumentMoniker": "RequestsForCarRepairs\\wwwroot\\js\\averageTime.js",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\wwwroot\\js\\averageTime.js",
+              "RelativeToolTip": "RequestsForCarRepairs\\wwwroot\\js\\averageTime.js",
+              "ViewState": "AgIAAEsAAAAAAAAAAAAAAGQAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-03-08T12:54:55.761Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "mechanic.js",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\wwwroot\\js\\mechanic.js",
+              "RelativeDocumentMoniker": "RequestsForCarRepairs\\wwwroot\\js\\mechanic.js",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\wwwroot\\js\\mechanic.js",
+              "RelativeToolTip": "RequestsForCarRepairs\\wwwroot\\js\\mechanic.js",
+              "ViewState": "AgIAAKMBAAAAAAAAAAAAwLEBAAAXAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2026-03-08T11:31:27.853Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "style.css",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\wwwroot\\css\\style.css",
+              "RelativeDocumentMoniker": "RequestsForCarRepairs\\wwwroot\\css\\style.css",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\wwwroot\\css\\style.css",
+              "RelativeToolTip": "RequestsForCarRepairs\\wwwroot\\css\\style.css",
+              "ViewState": "AgIAAN4BAAAAAAAAAAAiwPkBAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2026-03-02T18:33:32.891Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AlgorithmAverageTime.png - PNG [587x912, 32-\u0440\u0430\u0437\u0440\u044F\u0434\u043D\u043E\u0435, PNG]",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\schemes\\AlgorithmAverageTime.png",
+              "RelativeDocumentMoniker": "RequestsForCarRepairs\\schemes\\AlgorithmAverageTime.png",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\schemes\\AlgorithmAverageTime.png - PNG [587x912, 32-\u0440\u0430\u0437\u0440\u044F\u0434\u043D\u043E\u0435, PNG]",
+              "RelativeToolTip": "RequestsForCarRepairs\\schemes\\AlgorithmAverageTime.png - PNG [587x912, 32-\u0440\u0430\u0437\u0440\u044F\u0434\u043D\u043E\u0435, PNG]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001533|",
+              "WhenOpened": "2026-03-08T12:50:59.964Z",
+              "EditorCaption": " - PNG [587x912, 32-\u0440\u0430\u0437\u0440\u044F\u0434\u043D\u043E\u0435, PNG]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "mechanic.html",
+              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\wwwroot\\mechanic.html",
+              "RelativeDocumentMoniker": "RequestsForCarRepairs\\wwwroot\\mechanic.html",
+              "ToolTip": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\wwwroot\\mechanic.html",
+              "RelativeToolTip": "RequestsForCarRepairs\\wwwroot\\mechanic.html",
+              "ViewState": "AgIAAJcAAAAAAAAAAAAiwLIAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2026-03-04T08:49:41.247Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "UserService.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\scr\\Services\\UserService.cs",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\scr\\Services\\UserService.cs",
@@ -318,12 +342,11 @@
               "RelativeToolTip": "RequestsForCarRepairs\\scr\\Services\\UserService.cs",
               "ViewState": "AgIAAD0AAAAAAAAAAAAmwFQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-02T16:59:28.785Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-02T16:59:28.785Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 8,
               "Title": "customer.js",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\wwwroot\\js\\customer.js",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\wwwroot\\js\\customer.js",
@@ -331,25 +354,11 @@
               "RelativeToolTip": "RequestsForCarRepairs\\wwwroot\\js\\customer.js",
               "ViewState": "AgIAAGYBAAAAAAAAAAAcwGoBAAAyAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2026-03-08T11:33:56.949Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-08T11:33:56.949Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "manager.html",
-              "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\wwwroot\\manager.html",
-              "RelativeDocumentMoniker": "RequestsForCarRepairs\\wwwroot\\manager.html",
-              "ToolTip": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\wwwroot\\manager.html",
-              "RelativeToolTip": "RequestsForCarRepairs\\wwwroot\\manager.html",
-              "ViewState": "AgIAAIIAAAAAAAAAAAAiwJ0AAAAHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
-              "WhenOpened": "2026-03-04T08:28:49.295Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 13,
               "Title": "authorization.html",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\wwwroot\\authorization.html",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\wwwroot\\authorization.html",
@@ -361,7 +370,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 17,
               "Title": "Request.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\scr\\Models\\Request.cs",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\scr\\Models\\Request.cs",
@@ -373,7 +382,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 15,
               "Title": "RequestService.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\scr\\Services\\RequestService.cs",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\scr\\Services\\RequestService.cs",
@@ -385,7 +394,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 14,
               "Title": "RequestModels.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\scr\\Models\\RequestModels.cs",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\scr\\Models\\RequestModels.cs",
@@ -397,7 +406,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 21,
               "Title": "Comment.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\scr\\Models\\Comment.cs",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\scr\\Models\\Comment.cs",
@@ -409,7 +418,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 18,
               "Title": "RequestsController.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\scr\\Controllers\\RequestsController.cs",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\scr\\Controllers\\RequestsController.cs",
@@ -421,7 +430,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 19,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\scr\\Program.cs",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\scr\\Program.cs",
@@ -433,7 +442,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 20,
               "Title": "StatisticsController.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\scr\\Controllers\\StatisticsController.cs",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\scr\\Controllers\\StatisticsController.cs",
@@ -445,7 +454,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 22,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\scr\\Models\\User.cs",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\scr\\Models\\User.cs",
@@ -457,7 +466,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 23,
               "Title": "auth.js",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\wwwroot\\js\\auth.js",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\wwwroot\\js\\auth.js",
@@ -465,12 +474,11 @@
               "RelativeToolTip": "RequestsForCarRepairs\\wwwroot\\js\\auth.js",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2026-03-03T18:45:09.248Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-03T18:45:09.248Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 25,
               "Title": "UsersController.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\scr\\Controllers\\UsersController.cs",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\scr\\Controllers\\UsersController.cs",
@@ -482,7 +490,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 28,
               "Title": "ManagerController.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\scr\\Controllers\\ManagerController.cs",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\scr\\Controllers\\ManagerController.cs",
@@ -494,7 +502,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 26,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\scr\\Data\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\scr\\Data\\ApplicationDbContext.cs",
@@ -506,7 +514,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 24,
               "Title": "AuthController.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\scr\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\scr\\Controllers\\AuthController.cs",
@@ -518,7 +526,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 27,
               "Title": "ManagerDataController.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\scr\\Controllers\\ManagerDataController.cs",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\scr\\Controllers\\ManagerDataController.cs",
@@ -526,12 +534,11 @@
               "RelativeToolTip": "RequestsForCarRepairs\\scr\\Controllers\\ManagerDataController.cs",
               "ViewState": "AgIAAFYAAAAAAAAAAAAcwHgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-05T11:47:10.029Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-03-05T11:47:10.029Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 29,
               "Title": "RequestDto.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\scr\\DTOs\\RequestDto.cs",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\scr\\DTOs\\RequestDto.cs",
@@ -543,7 +550,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 32,
               "Title": "CommentsController.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\scr\\Controllers\\CommentsController.cs",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\scr\\Controllers\\CommentsController.cs",
@@ -555,7 +562,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 30,
               "Title": "MechanicController.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\scr\\Controllers\\MechanicController.cs",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\scr\\Controllers\\MechanicController.cs",
@@ -567,7 +574,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 31,
               "Title": "CreateCommentDto.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\scr\\DTOs\\CreateCommentDto.cs",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\scr\\DTOs\\CreateCommentDto.cs",
@@ -579,7 +586,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 33,
               "Title": "LoginModel.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\scr\\Models\\LoginModel.cs",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\scr\\Models\\LoginModel.cs",
@@ -591,7 +598,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 34,
               "Title": "IUserService.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\scr\\Services\\IUserService.cs",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\scr\\Services\\IUserService.cs",
@@ -603,7 +610,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 35,
               "Title": "UserDto.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\scr\\DTOs\\UserDto.cs",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\scr\\DTOs\\UserDto.cs",
@@ -615,7 +622,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 37,
               "Title": "launchSettings.json",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\Properties\\launchSettings.json",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\Properties\\launchSettings.json",
@@ -627,7 +634,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 36,
               "Title": "README.md",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\README.md",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\README.md",
@@ -639,7 +646,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 39,
               "Title": "UpdateRequestDto.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\scr\\DTOs\\UpdateRequestDto.cs",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\scr\\DTOs\\UpdateRequestDto.cs",
@@ -651,7 +658,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
+              "DocumentIndex": 40,
               "Title": "CreateRequestDto.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\scr\\DTOs\\CreateRequestDto.cs",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\scr\\DTOs\\CreateRequestDto.cs",
@@ -663,7 +670,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 38,
               "Title": "CommentDto.cs",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\scr\\DTOs\\CommentDto.cs",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\scr\\DTOs\\CommentDto.cs",
@@ -675,7 +682,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 41,
               "Title": "RequestsForCarRepairs.csproj",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\RequestsForCarRepairs\\RequestsForCarRepairs.csproj",
               "RelativeDocumentMoniker": "RequestsForCarRepairs\\RequestsForCarRepairs.csproj",
@@ -687,7 +694,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 42,
               "Title": "README.md",
               "DocumentMoniker": "C:\\Users\\user\\source\\repos\\RequestsForCarRepairs\\README.md",
               "RelativeDocumentMoniker": "README.md",
@@ -695,8 +702,7 @@
               "RelativeToolTip": "README.md",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAACDAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001818|",
-              "WhenOpened": "2026-02-27T19:01:54.422Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-02-27T19:01:54.422Z"
             }
           ]
         }

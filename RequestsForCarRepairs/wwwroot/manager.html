@@ -5,6 +5,75 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Менеджер качества</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Дополнительные стили для аналитики */
+        .analytics-container {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .analytics-card {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 15px;
+        }
+
+        .analytics-result {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1a73e8;
+            margin: 15px 0;
+            padding: 15px;
+            background: #e8f0fe;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .stats-detail {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .stats-item {
+            text-align: center;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+            .stats-item .label {
+                font-size: 12px;
+                color: #666;
+            }
+
+            .stats-item .value {
+                font-size: 18px;
+                font-weight: bold;
+                color: #333;
+            }
+
+        .btn-calculate {
+            background: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+            .btn-calculate:hover {
+                background: #45a049;
+            }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -44,11 +113,12 @@
             </div>
         </div>
 
-        <!-- Навигация -->
+        <!-- Навигация с новой вкладкой Аналитика -->
         <div class="nav">
             <button class="active" onclick="showTab('allRequests')">Все заявки</button>
             <button onclick="showTab('helpRequests')">Запросы помощи</button>
             <button onclick="showTab('qrGeneration')">QR-коды</button>
+            <button onclick="showTab('analytics')">📊 Аналитика</button>
         </div>
 
         <!-- Вкладка: Все заявки -->
@@ -109,6 +179,41 @@
                 </tbody>
             </table>
         </div>
+
+        <!-- НОВАЯ ВКЛАДКА: Аналитика -->
+        <div id="analyticsTab" class="tab">
+            <h2>📊 Аналитика ремонтов</h2>
+
+            <div class="analytics-container">
+                <!-- Кнопка для расчета -->
+                <button class="btn-calculate" onclick="calculateAverageRepairTime()">
+                    Рассчитать среднее время ремонта
+                </button>
+
+                <!-- Результат расчета -->
+                <div id="averageTimeResult" class="analytics-result">
+                    Нажмите кнопку для расчета
+                </div>
+
+                <!-- Детальная статистика -->
+                <div class="stats-detail" id="analyticsDetails">
+                    <div class="stats-item">
+                        <div class="label">Всего заявок</div>
+                        <div class="value" id="analyticsTotal">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="label">Завершено</div>
+                        <div class="value" id="analyticsCompleted">0</div>
+                    </div>
+                    <div class="stats-item">
+                        <div class="label">Процент завершения</div>
+                        <div class="value" id="analyticsPercent">0%</div>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
     </div>
 
     <!-- Модальное окно для продления срока -->
@@ -154,5 +259,6 @@
 
     <script src="js/auth.js"></script>
     <script src="js/manager.js"></script>
+    <script src="js/averageTime.js"></script>
 </body>
 </html>
