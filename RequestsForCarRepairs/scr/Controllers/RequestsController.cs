@@ -20,6 +20,7 @@ namespace RequestsForCarRepairs.API.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<object>>> GetRequests() 
         {
+
             try
             {
                 

@@ -255,7 +255,7 @@ async function loadComments(requestId) {
         console.error('Ошибка загрузки комментариев:', error);
         const container = document.getElementById('commentsList');
         if (container) {
-            container.innerHTML = '<p>Не удалось загрузить комментарии</p>';
+            container.innerHTML = '<p>Выберите комментарий</p>';
         }
     }
 }
